@@ -23,10 +23,10 @@ export const profile = {
    * Populate/adjust freely to match your LinkedIn Skills list.
    */
   techStack: {
-    frontend: ['Vue.js', 'JavaScript', 'Tailwind CSS', 'HTML', 'CSS'],
-    backend: ['Python', 'REST APIs'],
-    data: ['MongoDB', 'SQL'],
-    tools: ['Git', 'Vite'],
+    frontend: ['Vue 3', 'Vite', 'Tailwind CSS', 'Chart.js', 'JavaScript', 'React / React Native', 'HTML', 'CSS'],
+    backend: ['Node.js', 'Express', 'REST APIs', 'JWT auth', 'PHP / Laravel'],
+    data: ['MySQL', 'MongoDB', 'Power BI', 'Excel / CSV processing'],
+    tools: ['Git', 'GitHub', 'Postman', 'VS Code', 'Cursor', 'Vercel', 'Hostinger', 'XAMPP'],
   },
   photo: {
     src: '/DP_PORTFOLIO.PNG',
@@ -61,8 +61,8 @@ export const profile = {
     },
     {
       label: 'Stack',
-      value: 'Vue · Python',
-      detail: 'MongoDB · SQL',
+      value: 'Vue · Node.js',
+      detail: 'Express · MySQL · MongoDB',
     },
     {
       label: 'Domain',
@@ -137,9 +137,9 @@ export const projects = [
     title: 'RabDash DC Mobile',
     slug: 'rabdash-dc-mobile-application',
     typeLabel: 'Mobile App',
-    role: 'Full Stack · Student Intern',
+    role: 'Full Stack · Lead Developer',
     audience: 'City Veterinary Office (CVO) + private veterinarians in Davao City',
-    context: 'Android app for rabies vaccination case reporting in Davao City.',
+    context: 'Android app for rabies vaccination case reporting in Davao City — started as my thesis, now leading its full-stack build.',
     scope: 'Rabies case reporting',
     surface: 'Field submission workflow',
     summary: 'Mobile reporting application platform for seamless reporting of rabies vaccination and cases for both City Veterinarians Office (CVO) and private veterinarians in Davao City.',
@@ -151,7 +151,7 @@ export const projects = [
       constraints: 'Android-only · requires internet connection.',
     },
     resultLabel: 'Field-ready rabies reporting',
-    stack: ['React Native', 'Mobile Application', 'JavaScript', 'Public Health Analytics'],
+    stack: ['React', 'Express.js', 'Node.js', 'MySQL', 'Public Health Analytics'],
     featured: true,
     primary: true,
     featuredImage: '/login.png',
@@ -310,36 +310,39 @@ export const experience = [
     logoSrc: '/DiWA_Logo.jpeg',
     logoAlt: 'DiWA logo',
     summary:
-      'Tasked in planning and Enhancing the RabDash DC and other rabies related projects under DiWA, with ongoing DiWA Web App support.',
+      'Lead the design, development, implementation, and continuing improvement of RabDash, aligning technical work with Center and partner requirements.',
     highlights: [
-      'RabDash DC rabies charts, reporting flows, and field-ready interfaces.',
-      'Dashboard modules and reporting views on DiWA Web App.',
+      'Building the full-stack RabDash DC Mobile App (React, Express, Node.js, MySQL).',
+      'Technical point of contact for RabDash updates, demos, and stakeholder concerns.',
+      'Technical documentation, dashboards, app pitching, proposals, and mentoring.',
     ],
   },
   {
     company: 'Mindanao Center for Disease Watch and Analytics',
     companyShort: 'DiWA Center',
-    role: 'Computer Programmer',
-    dates: '2024–May 2026',
+    role: 'Computer Programmer I',
+    dates: 'Aug 2024–May 2026',
     current: false,
     logoSrc: '/DiWA_Logo.jpeg',
     logoAlt: 'DiWA logo',
-    summary: 'Built monitoring, reporting, and decision-support interfaces for disease surveillance workflows.',
+    summary:
+      'Developed and maintained public health dashboards and decision-support systems for disease surveillance and reporting.',
     highlights: [
-      'Reporting views and review flows.',
-      'Dashboard modules and KPI summaries.',
+      'Vue, Node.js, Express, MySQL, MongoDB, and Power BI dashboards.',
+      'Maintained RabDash DC for the City Veterinarian’s Office.',
+      'AI-assisted reporting, specs, proposals, and the IWOMB 2025 website.',
     ],
   },
   {
     company: 'RabDash DC, UP Mindanao',
-    role: 'Student Intern',
-    dates: '2023–2024',
+    role: 'Student Researcher & Summer Intern',
+    dates: 'Mar 2023–Jun 2024',
     logoSrc: '/Rabdash_logo.png',
     logoAlt: 'RabDash logo',
-    summary: 'Built reporting interfaces for Davao City rabies surveillance.',
+    summary: 'Developed and tested an Android app centralizing rabies data from private vets and the City Veterinarian’s Office.',
     highlights: [
-      'Charts and navigation improvements.',
-      'Made data easier for non-technical users.',
+      'Digitized historical vaccination records for data migration.',
+      'UI/UX and content improvements.',
     ],
   },
   {
@@ -348,10 +351,10 @@ export const experience = [
     dates: '2020–2024',
     logoSrc: '/UPMin_Logo.png',
     logoAlt: 'UP Mindanao seal',
-    summary: 'Built a strong foundation in software engineering and systems thinking.',
+    summary: 'Graduated Cum Laude. Thesis on a centralized pet management app for dog rabies vaccination reporting in Davao City.',
     highlights: [
-      'Software engineering fundamentals.',
-      'Maintainable UI and systems thinking.',
+      'Finalist, Best Thesis in Computer Science (Poster).',
+      'Software engineering fundamentals and systems thinking.',
     ],
   },
 ]
@@ -359,11 +362,11 @@ export const experience = [
 export const skills = [
   {
     title: 'Frontend and UI',
-    items: ['Vue 3', 'JavaScript', 'Tailwind CSS', 'Responsive layouts'],
+    items: ['Vue 3', 'JavaScript', 'Tailwind CSS', 'React Native'],
   },
   {
-    title: 'Tools',
-    items: ['Python', 'MongoDB', 'SQL', 'Git'],
+    title: 'Backend and data',
+    items: ['Node.js', 'Express', 'MySQL', 'MongoDB', 'Power BI'],
   },
   {
     title: 'Domain and product thinking',
