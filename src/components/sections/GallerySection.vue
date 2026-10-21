@@ -149,7 +149,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
           {{ gallery.title || 'Gallery' }}
         </p>
         <h2 class="mt-3 text-3xl leading-tight font-semibold tracking-[-0.03em] text-[var(--ink-strong)] sm:text-4xl">
-          Moments in tech.
+          {{ gallery.heading || 'Moments in tech.' }}
         </h2>
         <p v-if="gallery.intro" class="mt-3 max-w-xl text-base leading-relaxed text-[var(--ink-soft)]">
           {{ gallery.intro }}

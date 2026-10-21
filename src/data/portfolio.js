@@ -438,11 +438,108 @@ export const contact = {
 
 export const gallery = {
   title: 'Gallery',
+  heading: 'Moments in tech.',
   intro: 'Selected moments from conferences, presentations, demos, and milestones in my journey in tech.',
   events: [
     {
+      title: 'Regional Science, Technology, and Innovation Week (RSTW) 2026',
+      meta: 'SMX Convention Center Davao · Oct 17, 2026 · DiWA Center exhibit',
+      photos: [
+        {
+          title: 'EXHIBIT',
+          meta: 'RSTW 2026',
+          src: '/RSTW_1.jpeg',
+          alt: 'DiWA Center team at their exhibit booth during RSTW 2026 at SMX Convention Center Davao',
+        },
+        {
+          title: 'DEMO',
+          meta: 'RSTW 2026',
+          src: '/RSTW_2.jpeg',
+          alt: 'Demonstrating the DiWA app on a tablet to students at RSTW 2026',
+        },
+        {
+          title: 'DEMO',
+          meta: 'RSTW 2026',
+          src: '/RSTW_3.jpeg',
+          alt: 'Walking a group of students through the DiWA dashboards at the RSTW 2026 booth',
+        },
+      ],
+    },
+    {
+      title: '16th Health R&D Expo and Mentorship Program 2026',
+      meta: 'World Palace Hotel, Davao City · Oct 12–13, 2026 · DiWA PLUS presentation',
+      photos: [
+        {
+          title: 'PRESENTATION',
+          meta: '16th Health R&D Expo',
+          src: '/Mentorship_program_1.jpeg',
+          alt: 'Presenting "DiWA PLUS: Advancing the Disease Watch and Analytics (DiWA) App as an Integrated Disease Surveillance and Predictive Analytics Platform for Mindanao" at the 16th Health R&D Expo and Mentorship Program 2026',
+        },
+        {
+          title: 'TEAM',
+          meta: '16th Health R&D Expo',
+          src: '/Mentorship_program_2.jpeg',
+          alt: 'DiWA Center team group photo on stage at the 16th Health R&D Expo and Mentorship Program 2026',
+        },
+      ],
+    },
+    {
+      title: 'International Conference for Interdisciplinary Approaches to Health (ICIAH) 2026',
+      meta: 'Virtual · Sep 2026 · Paper presentation on RabDash DC',
+      photos: [
+        {
+          title: 'RESEARCH',
+          meta: 'ICIAH 2026',
+          src: '/ICIAH_1.jpeg',
+          alt: 'Gian presenting the paper "Development and Implementation of RabDash DC: A Web-Based Rabies Data Management and Analytics System for Davao City" at ICIAH 2026',
+        },
+        {
+          title: 'RESEARCH',
+          meta: 'ICIAH 2026',
+          src: '/ICIAH_3.jpeg',
+          alt: 'ICIAH 2026 presentation slide on the Davao City Veterinarian’s Office and its paper-based data-entry forms',
+        },
+        {
+          title: 'RESEARCH',
+          meta: 'ICIAH 2026',
+          src: '/ICIAH_2.jpeg',
+          alt: 'ICIAH 2026 presentation slide on RabDash DC implementation and adoption since 2023',
+        },
+      ],
+    },
+    {
+      title: 'DiWA App Caravan',
+      meta: 'Davao Region · Jun 15–22, 2026 · Product demonstration',
+      photos: [
+        {
+          title: 'DEMO',
+          meta: 'DiWA App Caravan',
+          src: '/DiWA_App_Caravan_1.jpeg',
+          alt: 'Gian presenting the DiWA app during the DiWA App Caravan',
+        },
+        {
+          title: 'DEMO',
+          meta: 'DiWA App Caravan',
+          src: '/DiWA_App_Caravan_2.jpeg',
+          alt: 'Health office staff watching a DiWA app demonstration in a conference room',
+        },
+        {
+          title: 'PARTNERS',
+          meta: 'Department of Health Davao Region',
+          src: '/DiWA_App_Caravan_3.jpeg',
+          alt: 'Group photo with the Department of Health Davao Region team during the DiWA App Caravan',
+        },
+        {
+          title: 'PARTNERS',
+          meta: 'Carmen Municipal Health Office',
+          src: '/DiWA_App_Caravan_4.jpeg',
+          alt: 'Group photo with the Carmen Municipal Health Office team during the DiWA App Caravan',
+        },
+      ],
+    },
+    {
       title: 'PythonAsia 2026',
-      meta: 'Manila · Community event',
+      meta: 'Manila · Mar 21–23, 2026 · Community event',
       photos: [
         {
           title: 'CONFERENCE',
