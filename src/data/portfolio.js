@@ -1,10 +1,11 @@
 /**
- * GitHub: profile/social and proof links use GreenGem-Star01; RabDash Mobile repo is under GianSolo-aok.
- * Consolidate to one professional account when possible — see FIX 10 note in PORTFOLIO_FIXES checklist.
+ * GitHub: profile/social links use gian-r-cabrera; RabDash Mobile repo is still under GianSolo-aok.
+ * Update its repoUrl once the repo is transferred to gian-r-cabrera.
  */
 export const navigation = [
   { label: 'Projects', href: '#projects' },
   { label: 'Experience', href: '#experience' },
+  { label: 'Research', href: '#research' },
   { label: 'Recommendations', href: '#recommendations' },
   { label: 'Gallery', href: '#gallery' },
   { label: 'Contact', href: '#contact' },
@@ -17,7 +18,6 @@ export const profile = {
   title: 'Gian Cabrera — Software Developer · Researcher',
   /** Line 1: your name (gradient). Line 2: primary role. Roles pipe is heroRolesLine below. */
   heroTitleLines: ['Gian Cabrera', 'Software Developer · Researcher'],
-  techBadges: ['Vue 3', 'JavaScript', 'Tailwind CSS', 'Vite', 'REST APIs', 'Data Visualization'],
   /**
    * Full tech stack for the “See all tech” modal.
    * Populate/adjust freely to match your LinkedIn Skills list.
@@ -82,52 +82,6 @@ export const profile = {
     {
       label: 'GitHub',
       url: 'https://github.com/gian-r-cabrera',
-    },
-  ],
-  resumeUrl: '/gian-cabrera-resume.pdf',
-  credibilityPoints: [
-    {
-      label: 'Current role',
-      value: 'Junior Programmer',
-    },
-    {
-      label: 'Domain fit',
-      value: 'Public health and reporting UX',
-    },
-    {
-      label: 'Strength',
-      value: 'Readable data-heavy screens',
-    },
-  ],
-  heroStats: [
-    {
-      label: 'Current Role',
-      value: 'Junior Programmer',
-    },
-    {
-      label: 'Domain',
-      value: 'Public Health Tech',
-    },
-    {
-      label: 'Location',
-      value: 'Davao City, PH',
-    },
-    {
-      label: 'Status',
-      value: 'Available',
-      highlight: true,
-    },
-  ],
-  benchmarkStrip: [
-    {
-      label: 'Work Style',
-      value: 'Clarity-First UI',
-      detail: 'Decision-first UI for complex work.',
-    },
-    {
-      label: 'Best Fit',
-      value: 'Product UI',
-      detail: 'Workflow tools and data-heavy screens.',
     },
   ],
 }
@@ -432,6 +386,36 @@ export const contact = {
       url: 'https://github.com/gian-r-cabrera',
       icon: 'github',
       ariaLabel: "Open Gian Cabrera's GitHub profile",
+    },
+  ],
+}
+
+export const research = {
+  intro: 'Papers and pitches where I present the public health systems I build, newest first.',
+  items: [
+    {
+      type: 'Project pitch',
+      title:
+        'DiWA PLUS: Advancing the Disease Watch and Analytics (DiWA) App as an Integrated Disease Surveillance and Predictive Analytics Platform for Mindanao',
+      event: '16th Health R&D Expo and Mentorship Program 2026',
+      location: 'World Palace Hotel, Davao City',
+      date: 'Oct 13, 2026',
+      role: 'Presenter',
+      summary:
+        'Pitched DiWA PLUS as a flagship project proposal in the mentorship program: extending the DiWA app into an integrated disease surveillance and predictive analytics platform for Mindanao.',
+    },
+    {
+      type: 'Paper presentation',
+      title:
+        'Development and Implementation of RabDash DC: A Web-Based Rabies Data Management and Analytics System for Davao City',
+      event: 'International Conference for Interdisciplinary Approaches to Health (ICIAH) 2026',
+      location: 'Virtual',
+      date: 'Sep 9, 2026',
+      role: 'Presenter',
+      summary:
+        'Presented the design and rollout of RabDash DC, a web system that replaced the Davao City Veterinarian’s Office’s paper-based rabies forms and has supported its rabies data management and monitoring since 2023.',
+      /** Set `url` to the published paper once it is out, and remove `status`. */
+      status: 'Publication forthcoming',
     },
   ],
 }

@@ -80,7 +80,7 @@ onBeforeUnmount(() => {
             :sizes="profile.photo.sizes || undefined"
             :alt="profile.photo.alt"
             class="absolute inset-0 h-full w-full object-cover object-[center_8%]"
-            loading="lazy"
+            loading="eager"
             decoding="async"
             fetchpriority="high"
           />

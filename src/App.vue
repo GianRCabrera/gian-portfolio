@@ -6,6 +6,7 @@ import ProjectsSection from './components/sections/ProjectsSection.vue'
 import ExperienceSection from './components/sections/ExperienceSection.vue'
 import ContactSection from './components/sections/ContactSection.vue'
 import RecommendationsSection from './components/sections/RecommendationsSection.vue'
+import ResearchSection from './components/sections/ResearchSection.vue'
 import GallerySection from './components/sections/GallerySection.vue'
 import { useActiveSection } from './composables/useActiveSection'
 import {
@@ -17,6 +18,7 @@ import {
   projects,
   recommendations,
   recommendationsMeta,
+  research,
   skills,
 } from './data/portfolio'
 
@@ -28,6 +30,7 @@ const { activeSection } = useActiveSection([
   'top',
   'projects',
   'experience',
+  'research',
   'recommendations',
   'gallery',
   'contact',
@@ -138,6 +141,7 @@ watch(theme, (value) => {
 
       <ProjectsSection :projects="projects" />
       <ExperienceSection :experience="experience" :skills="skills" />
+      <ResearchSection :research="research" />
       <RecommendationsSection :recommendations="recommendations" :meta="recommendationsMeta" />
       <GallerySection :gallery="gallery" />
       <ContactSection :contact="contact" :profile="profile" />
