@@ -39,11 +39,14 @@ npm run preview   # serve the production build locally
 
 ```
 src/
-  data/portfolio.js       # all site content: profile, projects, experience, research, gallery, recommendations
+  data/portfolio.js       # all site content: profile, projects, case studies, experience, research, gallery, recommendations
   components/sections/    # one component per page section
   components/SiteHeader.vue
+  pages/CaseStudyPage.vue # layout for case study pages
+  case-study.js           # entry point for case study pages
   composables/            # active-section tracking and scroll reveal
   style.css               # theme tokens (light/dark) and global styles
+rabdash-dc-mobile/        # case study page (/rabdash-dc-mobile/), a separate Vite entry
 public/                   # images (WebP), resume PDF, link preview image, robots.txt, sitemap.xml
 docs/                     # README assets (not deployed)
 ```
@@ -72,6 +75,8 @@ Convert photos to WebP before adding them to `public/` (requires `cwebp`, e.g. `
 cwebp -q 80 -resize 1600 0 Event_1.jpeg -o public/Event_1.webp                  # landscape; use -resize 0 1600 for portrait
 cwebp -q 78 -resize 320 0 public/Event_1.webp -o public/gallery-thumbs/Event_1.webp
 ```
+
+**Add a case study page:** add its content to `caseStudies` in `portfolio.js`, copy `rabdash-dc-mobile/index.html` to a new folder named after the slug (update the title, meta tags, and `data-case-study`), add it to `build.rollupOptions.input` in `vite.config.js`, and set the project's `caseStudyUrl` to `/<slug>/`.
 
 **Add a talk or paper:** add an entry to `research.items`. Set `url` once a paper is published, and remove `status`.
 

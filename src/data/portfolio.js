@@ -106,7 +106,7 @@ export const projects = [
       constraints: 'Android-only · requires internet connection.',
     },
     resultLabel: 'Field-ready rabies reporting',
-    stack: ['React', 'Express.js', 'Node.js', 'MySQL', 'Public Health Analytics'],
+    stack: ['React Native', 'Express.js', 'Node.js', 'MySQL', 'Public Health Analytics'],
     featured: true,
     primary: true,
     featuredImage: '/login.webp',
@@ -157,7 +157,7 @@ export const projects = [
     screens: [],
     liveUrl: '',
     repoUrl: 'https://github.com/GianSolo-aok/Rabdash_Mobile',
-    caseStudyUrl: '',
+    caseStudyUrl: '/rabdash-dc-mobile/',
   },
   {
     title: 'IWOMB 2025 Website',
@@ -267,7 +267,7 @@ export const experience = [
     summary:
       'Lead the design, development, implementation, and continuing improvement of RabDash, aligning technical work with Center and partner requirements.',
     highlights: [
-      'Building the full-stack RabDash DC Mobile App (React, Express, Node.js, MySQL).',
+      'Building the full-stack RabDash DC Mobile App (React Native, Express, Node.js, MySQL).',
       'Technical point of contact for RabDash updates, demos, and stakeholder concerns.',
       'Technical documentation, dashboards, app pitching, proposals, and mentoring.',
     ],
@@ -389,6 +389,65 @@ export const contact = {
       ariaLabel: "Open Gian Cabrera's GitHub profile",
     },
   ],
+}
+
+/** Full case study pages, keyed by the page slug (e.g. /rabdash-dc-mobile/). */
+export const caseStudies = {
+  'rabdash-dc-mobile': {
+    title: 'RabDash DC Mobile',
+    kicker: 'Case study · From thesis to production',
+    tagline:
+      'An Android app that brings rabies vaccination and case reporting for the Davao City Veterinarian’s Office (CVO) and private veterinarians into one place.',
+    facts: [
+      { label: 'My role', value: 'Full-stack developer, now lead developer' },
+      { label: 'Timeline', value: 'Mar 2023 – present' },
+      { label: 'Platform', value: 'Android' },
+      { label: 'Stack', value: 'React Native · Express.js · Node.js · MySQL' },
+      { label: 'Users', value: 'CVO staff and private veterinarians, Davao City' },
+      { label: 'Recognition', value: 'Finalist, Best Thesis in Computer Science (Poster)' },
+    ],
+    sections: [
+      {
+        heading: 'The problem',
+        paragraphs: [
+          'Private veterinary clinics across Davao City give rabies vaccinations, but the CVO had no direct way to receive those records. Its staff had to go around the city to collect the data from each clinic, so it was hard to collect accurately and stayed scattered.',
+          'The RabDash DC project, which aims for a rabies-free Davao City by 2030, needed that data in one place, sent straight from the people doing the vaccinations.',
+        ],
+      },
+      {
+        heading: 'What I built',
+        paragraphs: [
+          'RabDash DC Mobile started as my solo undergraduate thesis at UP Mindanao: a centralized app for rabies vaccination reporting. I built it full stack on my own, from the React Native screens to the API and database behind them.',
+        ],
+        bullets: [
+          'Accounts: sign up, login, password reset, and user profiles.',
+          'Input forms that mirror the CVO’s reports: field vaccination, neuter, animal control and rehabilitation, rabies sample information, human rabies exposure, schedules and events, seminars and IEC reports, and budget.',
+          'Data tables to review submitted records for each form.',
+          'Downloadable copies of the blank forms for offline paperwork.',
+          'Reporting flows for both CVO staff and private veterinarians.',
+          'An Express and Node.js API with a MySQL database.',
+        ],
+      },
+    ],
+    screensHeading: 'Screens',
+    screens: [
+      { src: '/Landing_page.webp', caption: 'Welcome', alt: 'RabDash DC welcome screen with login and sign up buttons' },
+      { src: '/login.webp', caption: 'Login', alt: 'Login screen' },
+      { src: '/menu_cvo.webp', caption: 'Main menu', alt: 'Main menu with input forms, data tables, downloadable forms, profile, and about' },
+      { src: '/CVO_Data_Tables_Menu.webp', caption: 'Data tables', alt: 'CVO data tables menu listing eight report types' },
+      { src: '/Downloadable_Forms_CVO.webp', caption: 'Downloadable forms', alt: 'Downloadable forms menu listing eight blank CVO forms' },
+      { src: '/User_Profile.webp', caption: 'Profile', alt: 'User profile screen' },
+      { src: '/register.webp', caption: 'Sign up', alt: 'Registration screen' },
+      { src: '/reset_forgotten_password.webp', caption: 'Reset password', alt: 'Reset forgotten password screen' },
+    ],
+    timelineHeading: 'From thesis to production',
+    timeline: [
+      { date: 'Mar 2023', text: 'Joined RabDash DC at UP Mindanao as a student researcher and summer intern, and began building the app as my thesis.' },
+      { date: '2023 – 2024', text: 'Built and tested the app, and digitized historical vaccination records so they could be migrated into it.' },
+      { date: 'May 2024', text: 'Defended the thesis; finalist for Best Thesis in Computer Science (Poster). Graduated cum laude.' },
+      { date: 'Jun 2026 – now', text: 'As Junior Programmer at the DiWA Center, I lead the app’s full-stack build. I also maintain and lead RabDash DC’s web system, which I inherited.' },
+    ],
+  },
 }
 
 export const research = {

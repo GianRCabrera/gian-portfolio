@@ -355,7 +355,16 @@ onUnmounted(() => {
           >
             Source code
           </a>
+          <a
+            v-if="primaryProject.caseStudyUrl"
+            :href="primaryProject.caseStudyUrl"
+            class="inline-flex items-center justify-center rounded-full border border-[var(--line-strong)] px-4 py-2.5 text-sm font-medium transition hover:-translate-y-0.5 hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+            style="background: var(--button-secondary-bg); color: var(--button-secondary-text);"
+          >
+            Case study →
+          </a>
           <button
+            v-else
             type="button"
             class="inline-flex items-center justify-center rounded-full border border-[var(--line-strong)] px-4 py-2.5 text-sm font-medium transition hover:-translate-y-0.5 hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
             style="background: var(--button-secondary-bg); color: var(--button-secondary-text);"
@@ -469,12 +478,12 @@ onUnmounted(() => {
                 <a
                   v-if="selectedProject.caseStudyUrl"
                   :href="selectedProject.caseStudyUrl"
-                  target="_blank"
-                  rel="noreferrer"
+                  :target="selectedProject.caseStudyUrl.startsWith('/') ? undefined : '_blank'"
+                  :rel="selectedProject.caseStudyUrl.startsWith('/') ? undefined : 'noreferrer'"
                   class="inline-flex items-center justify-center rounded-full border border-[var(--line-strong)] px-5 py-3 text-sm font-medium transition hover:-translate-y-0.5 hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
                   style="background: var(--button-secondary-bg); color: var(--button-secondary-text);"
                 >
-                  External case study →
+                  {{ selectedProject.caseStudyUrl.startsWith('/') ? 'Read full case study →' : 'External case study →' }}
                 </a>
               </div>
             </div>
