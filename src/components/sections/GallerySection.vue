@@ -106,8 +106,17 @@ const updateOrientation = (src) => {
   img.src = src
 }
 
-watch(activeEvent, () => {
+const thumbStrip = ref(null)
+
+watch(activeEvent, (index) => {
   activePhoto.value = 0
+
+  // Keep the active thumbnail visible; scroll only the strip, never the page.
+  const strip = thumbStrip.value
+  const thumb = strip?.children?.[index]
+  if (!strip || !thumb) return
+  const left = thumb.offsetLeft - (strip.clientWidth - thumb.offsetWidth) / 2
+  strip.scrollTo({ left: Math.max(0, left), behavior: 'smooth' })
 })
 
 watch(
@@ -309,6 +318,45 @@ onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
               Photo {{ photoCounterLabel }}
             </span>
           </div>
+        </div>
+
+        <!-- Jump straight to any event -->
+        <div
+          v-if="hasMultipleEvents"
+          ref="thumbStrip"
+          class="flex snap-x gap-2.5 overflow-x-auto px-0.5 pb-2 pt-1"
+          aria-label="Jump to an event"
+        >
+          <button
+            v-for="(event, index) in normalizedEvents"
+            :key="`${event.title}-${index}`"
+            type="button"
+            class="group flex w-28 flex-none snap-start flex-col justify-start overflow-hidden rounded-[0.9rem] border bg-[var(--surface)] text-left transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:w-32"
+            :class="
+              index === activeEvent
+                ? 'border-[var(--accent)] shadow-[0_8px_20px_rgba(27,110,97,0.16)]'
+                : 'border-[var(--line)] opacity-80 hover:border-[var(--accent)]/40 hover:opacity-100'
+            "
+            :aria-current="index === activeEvent ? 'true' : undefined"
+            :aria-label="`Show event: ${event.title}`"
+            @click="setActiveEvent(index)"
+          >
+            <span class="block aspect-[4/3] w-full overflow-hidden bg-[var(--surface-panel-soft)]">
+              <img
+                v-if="event.cover || event.photos?.[0]?.src"
+                :src="event.cover || event.photos[0].src"
+                alt=""
+                class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.04]"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+            <span
+              class="line-clamp-2 px-2 py-1.5 text-[0.68rem] leading-snug font-semibold text-[var(--ink-strong)]"
+            >
+              {{ event.shortTitle || event.title }}
+            </span>
+          </button>
         </div>
       </div>
     </div>

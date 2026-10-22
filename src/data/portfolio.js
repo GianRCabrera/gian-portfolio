@@ -29,9 +29,10 @@ export const profile = {
     tools: ['Git', 'GitHub', 'Postman', 'VS Code', 'Cursor', 'Vercel', 'Hostinger', 'XAMPP'],
   },
   photo: {
-    src: '/DP_PORTFOLIO.PNG',
-    fallbackSrc: '/DP_PORTFOLIO-1200.jpg',
-    srcSet: '/DP_PORTFOLIO-800.jpg 533w, /DP_PORTFOLIO-1200.jpg 800w, /DP_PORTFOLIO-1600.jpg 1066w',
+    src: '/DP_PORTFOLIO-800.webp',
+    fallbackSrc: '/DP_PORTFOLIO-800.webp',
+    srcSet:
+      '/DP_PORTFOLIO-160.webp 160w, /DP_PORTFOLIO-533.webp 533w, /DP_PORTFOLIO-800.webp 800w, /DP_PORTFOLIO-1066.webp 1066w',
     sizes: '(max-width: 640px) 280px, (max-width: 1024px) 248px, 272px',
     alt: 'Portrait of Gian Cabrera',
     caption: 'Software Developer · DiWA Center',
@@ -42,7 +43,7 @@ export const profile = {
   },
   /** Hero lead copy (short paragraphs, top-to-bottom). */
   introParagraphs: [
-    'Junior Programmer at the DiWA Center (UP Mindanao), building dashboards, reporting workflows, and decision-support tools for disease surveillance and public health. I turn complex data into clear, practical products that help teams read information faster and act with confidence.',
+    'Junior Programmer at the DiWA Center (UP Mindanao), where I lead RabDash DC: the rabies data management and analytics system that replaced the Davao City Veterinarian’s Office’s paper forms and saves its team significant time on encoding and reporting. I build dashboards, reporting workflows, and decision-support tools for disease surveillance and public health.',
     'I work best in data-heavy environments where clarity, reliability, and usability matter. From analytics dashboards to geospatial and workflow systems, I focus on software that holds up in real-world use.',
   ],
   /** Short chips under the lead (three items; highlights carry NOW/DOMAIN/STACK). */
@@ -57,7 +58,7 @@ export const profile = {
     {
       label: 'Now',
       value: 'Junior Programmer',
-      detail: 'DiWA · UP Mindanao',
+      detail: 'Leading RabDash DC · DiWA',
     },
     {
       label: 'Stack',
@@ -108,47 +109,47 @@ export const projects = [
     stack: ['React', 'Express.js', 'Node.js', 'MySQL', 'Public Health Analytics'],
     featured: true,
     primary: true,
-    featuredImage: '/login.png',
+    featuredImage: '/login.webp',
     featuredImageAlt: 'Login screen',
     featuredImageCaption: 'Login',
     featuredSlides: [
       {
-        src: '/login.png',
+        src: '/login.webp',
         alt: 'Login screen',
         caption: 'Login',
       },
       {
-        src: '/register.png',
+        src: '/register.webp',
         alt: 'Register screen',
         caption: 'Register',
       },
       {
-        src: '/reset_forgotten_password.png',
+        src: '/reset_forgotten_password.webp',
         alt: 'Reset forgotten password screen',
         caption: 'Reset password',
       },
       {
-        src: '/Landing_page.png',
+        src: '/Landing_page.webp',
         alt: 'Landing page screen',
         caption: 'Landing page',
       },
       {
-        src: '/menu_cvo.png',
+        src: '/menu_cvo.webp',
         alt: 'CVO menu screen',
         caption: 'CVO menu',
       },
       {
-        src: '/User_Profile.png',
+        src: '/User_Profile.webp',
         alt: 'User profile screen',
         caption: 'User profile',
       },
       {
-        src: '/Downloadable_Forms_CVO.png',
+        src: '/Downloadable_Forms_CVO.webp',
         alt: 'Downloadable forms screen (CVO)',
         caption: 'Downloadable forms',
       },
       {
-        src: '/CVO_Data_Tables_Menu.png',
+        src: '/CVO_Data_Tables_Menu.webp',
         alt: 'CVO data tables menu screen',
         caption: 'Data tables menu',
       },
@@ -181,7 +182,7 @@ export const projects = [
     featured: true,
     primary: false,
     featuredImage: null,
-    cardImage: '/iwomb2025.png',
+    cardImage: '/iwomb2025.webp',
     cardKind: 'Public site',
     cardStat: 'Google Sites',
     highlightSecondary: false,
@@ -212,7 +213,7 @@ export const projects = [
     featured: true,
     primary: false,
     featuredImage: null,
-    cardImage: '/dashboard1.png',
+    cardImage: '/dashboard1.webp',
     cardKind: 'Internal product',
     cardStat: 'Hybrid reporting',
     highlightSecondary: true,
@@ -244,7 +245,7 @@ export const projects = [
     featured: true,
     primary: false,
     featuredImage: null,
-    cardImage: '/rabdash.png',
+    cardImage: '/rabdash.webp',
     cardKind: 'Live system',
     cardStat: 'Charts in production',
     highlightSecondary: false,
@@ -261,7 +262,7 @@ export const experience = [
     role: 'Junior Programmer',
     dates: 'Jun 2026–present',
     current: true,
-    logoSrc: '/DiWA_Logo.jpeg',
+    logoSrc: '/DiWA_Logo.webp',
     logoAlt: 'DiWA logo',
     summary:
       'Lead the design, development, implementation, and continuing improvement of RabDash, aligning technical work with Center and partner requirements.',
@@ -277,7 +278,7 @@ export const experience = [
     role: 'Computer Programmer I',
     dates: 'Aug 2024–May 2026',
     current: false,
-    logoSrc: '/DiWA_Logo.jpeg',
+    logoSrc: '/DiWA_Logo.webp',
     logoAlt: 'DiWA logo',
     summary:
       'Developed and maintained public health dashboards and decision-support systems for disease surveillance and reporting.',
@@ -291,7 +292,7 @@ export const experience = [
     company: 'RabDash DC, UP Mindanao',
     role: 'Student Researcher & Summer Intern',
     dates: 'Mar 2023–Jun 2024',
-    logoSrc: '/Rabdash_logo.png',
+    logoSrc: '/Rabdash_logo.webp',
     logoAlt: 'RabDash logo',
     summary: 'Developed and tested an Android app centralizing rabies data from private vets and the City Veterinarian’s Office.',
     highlights: [
@@ -303,7 +304,7 @@ export const experience = [
     company: 'University of the Philippines Mindanao',
     role: 'BS Computer Science',
     dates: '2020–2024',
-    logoSrc: '/UPMin_Logo.png',
+    logoSrc: '/UPMin_Logo.webp',
     logoAlt: 'UP Mindanao seal',
     summary: 'Graduated Cum Laude. Thesis on a centralized pet management app for dog rabies vaccination reporting in Davao City.',
     highlights: [
@@ -424,69 +425,76 @@ export const gallery = {
   title: 'Gallery',
   heading: 'Moments in tech.',
   intro: 'Selected moments from conferences, presentations, demos, and milestones in my journey in tech.',
+  /** Newest first. `cover`: small 320px thumbnail (falls back to the first photo); `shortTitle`: label under it (falls back to title). */
   events: [
     {
       title: 'Regional Science, Technology, and Innovation Week (RSTW) 2026',
+      shortTitle: 'RSTW 2026',
       meta: 'SMX Convention Center Davao · Oct 17, 2026 · DiWA Center exhibit',
+      cover: '/gallery-thumbs/RSTW_1.webp',
       photos: [
         {
           title: 'EXHIBIT',
           meta: 'RSTW 2026',
-          src: '/RSTW_1.jpeg',
+          src: '/RSTW_1.webp',
           alt: 'DiWA Center team at their exhibit booth during RSTW 2026 at SMX Convention Center Davao',
         },
         {
           title: 'DEMO',
           meta: 'RSTW 2026',
-          src: '/RSTW_2.jpeg',
+          src: '/RSTW_2.webp',
           alt: 'Demonstrating the DiWA app on a tablet to students at RSTW 2026',
         },
         {
           title: 'DEMO',
           meta: 'RSTW 2026',
-          src: '/RSTW_3.jpeg',
+          src: '/RSTW_3.webp',
           alt: 'Walking a group of students through the DiWA dashboards at the RSTW 2026 booth',
         },
       ],
     },
     {
       title: '16th Health R&D Expo and Mentorship Program 2026',
+      shortTitle: 'Health R&D Expo 2026',
       meta: 'World Palace Hotel, Davao City · Oct 12–13, 2026 · DiWA PLUS presentation',
+      cover: '/gallery-thumbs/Mentorship_program_2.webp',
       photos: [
         {
           title: 'PRESENTATION',
           meta: '16th Health R&D Expo',
-          src: '/Mentorship_program_1.jpeg',
+          src: '/Mentorship_program_1.webp',
           alt: 'Presenting "DiWA PLUS: Advancing the Disease Watch and Analytics (DiWA) App as an Integrated Disease Surveillance and Predictive Analytics Platform for Mindanao" at the 16th Health R&D Expo and Mentorship Program 2026',
         },
         {
           title: 'TEAM',
           meta: '16th Health R&D Expo',
-          src: '/Mentorship_program_2.jpeg',
+          src: '/Mentorship_program_2.webp',
           alt: 'DiWA Center team group photo on stage at the 16th Health R&D Expo and Mentorship Program 2026',
         },
       ],
     },
     {
       title: 'International Conference for Interdisciplinary Approaches to Health (ICIAH) 2026',
-      meta: 'Virtual · Sep 2026 · Paper presentation on RabDash DC',
+      shortTitle: 'ICIAH 2026',
+      meta: 'Virtual · Sep 9, 2026 · Paper presentation on RabDash DC',
+      cover: '/gallery-thumbs/ICIAH_1.webp',
       photos: [
         {
           title: 'RESEARCH',
           meta: 'ICIAH 2026',
-          src: '/ICIAH_1.jpeg',
+          src: '/ICIAH_1.webp',
           alt: 'Gian presenting the paper "Development and Implementation of RabDash DC: A Web-Based Rabies Data Management and Analytics System for Davao City" at ICIAH 2026',
         },
         {
           title: 'RESEARCH',
           meta: 'ICIAH 2026',
-          src: '/ICIAH_3.jpeg',
+          src: '/ICIAH_3.webp',
           alt: 'ICIAH 2026 presentation slide on the Davao City Veterinarian’s Office and its paper-based data-entry forms',
         },
         {
           title: 'RESEARCH',
           meta: 'ICIAH 2026',
-          src: '/ICIAH_2.jpeg',
+          src: '/ICIAH_2.webp',
           alt: 'ICIAH 2026 presentation slide on RabDash DC implementation and adoption since 2023',
         },
       ],
@@ -494,29 +502,30 @@ export const gallery = {
     {
       title: 'DiWA App Caravan',
       meta: 'Davao Region · Jun 15–22, 2026 · Product demonstration',
+      cover: '/gallery-thumbs/DiWA_App_Caravan_3.webp',
       photos: [
         {
           title: 'DEMO',
           meta: 'DiWA App Caravan',
-          src: '/DiWA_App_Caravan_1.jpeg',
+          src: '/DiWA_App_Caravan_1.webp',
           alt: 'Gian presenting the DiWA app during the DiWA App Caravan',
         },
         {
           title: 'DEMO',
           meta: 'DiWA App Caravan',
-          src: '/DiWA_App_Caravan_2.jpeg',
+          src: '/DiWA_App_Caravan_2.webp',
           alt: 'Health office staff watching a DiWA app demonstration in a conference room',
         },
         {
           title: 'PARTNERS',
           meta: 'Department of Health Davao Region',
-          src: '/DiWA_App_Caravan_3.jpeg',
+          src: '/DiWA_App_Caravan_3.webp',
           alt: 'Group photo with the Department of Health Davao Region team during the DiWA App Caravan',
         },
         {
           title: 'PARTNERS',
           meta: 'Carmen Municipal Health Office',
-          src: '/DiWA_App_Caravan_4.jpeg',
+          src: '/DiWA_App_Caravan_4.webp',
           alt: 'Group photo with the Carmen Municipal Health Office team during the DiWA App Caravan',
         },
       ],
@@ -524,71 +533,75 @@ export const gallery = {
     {
       title: 'PythonAsia 2026',
       meta: 'Manila · Mar 21–23, 2026 · Community event',
+      cover: '/gallery-thumbs/PythonAsia2026_group.webp',
       photos: [
         {
           title: 'CONFERENCE',
           meta: 'PythonAsia 2026',
-          src: '/PythonAsia2026.jpeg',
+          src: '/PythonAsia2026.webp',
           alt: 'Photo at PythonAsia 2026 event backdrop',
         },
         {
           title: 'CONFERENCE',
           meta: 'PythonAsia 2026',
-          src: '/PythonAsia2026_group.jpeg',
+          src: '/PythonAsia2026_group.webp',
           alt: 'Group photo at PythonAsia 2026 event backdrop',
         },
       ],
     },
     {
-      title: 'Pycon Davao 2024',
-      meta: 'Davao · Community event',
-      photos: [
-        {
-          title: 'COMMUNITY',
-          meta: 'Pycon Davao 2024',
-          src: '/PyconDavao2024.jpeg',
-          alt: 'Photo from Pycon Davao 2024 event',
-        },
-        {
-          title: 'COMMUNITY',
-          meta: 'Pycon Davao 2024',
-          src: '/PyconDavao2024_2.jpeg',
-          alt: 'Second photo from Pycon Davao 2024 event',
-        },
-      ],
-    },
-    {
       title: 'Mindanao Startup Summit',
-      meta: 'Mindanao · Startup ecosystem',
+      meta: 'Mindanao · Sep 2025 · Startup ecosystem',
+      cover: '/gallery-thumbs/Mindanao_StartUpSummit1.webp',
       photos: [
         {
           title: 'COMMUNITY',
           meta: 'Mindanao Startup Summit',
-          src: '/Mindanao_StartUpSummit1.jpeg',
+          src: '/Mindanao_StartUpSummit1.webp',
           alt: 'Photo from Mindanao Startup Summit event',
         },
         {
           title: 'COMMUNITY',
           meta: 'Mindanao Startup Summit',
-          src: '/Mindanao_StartUpSummit2.jpeg',
+          src: '/Mindanao_StartUpSummit2.webp',
           alt: 'Second photo from Mindanao Startup Summit event',
         },
       ],
     },
     {
+      title: 'Pycon Davao 2024',
+      meta: 'Davao · Sep 2024 · Community event',
+      cover: '/gallery-thumbs/PyconDavao2024.webp',
+      photos: [
+        {
+          title: 'COMMUNITY',
+          meta: 'Pycon Davao 2024',
+          src: '/PyconDavao2024.webp',
+          alt: 'Photo from Pycon Davao 2024 event',
+        },
+        {
+          title: 'COMMUNITY',
+          meta: 'Pycon Davao 2024',
+          src: '/PyconDavao2024_2.webp',
+          alt: 'Second photo from Pycon Davao 2024 event',
+        },
+      ],
+    },
+    {
       title: 'Thesis defense',
-      meta: 'UP Mindanao · Presentation day',
+      meta: 'UP Mindanao · May 2024 · Presentation day',
+      cover: '/gallery-thumbs/thesis_def1.webp',
       photos: [
         {
           title: 'PRESENTATION',
           meta: 'Thesis defense',
-          src: '/thesis_def1.jpeg',
+          src: '/thesis_def1.webp',
           alt: 'Thesis defense photo',
         },
         {
           title: 'PRESENTATION',
           meta: 'Thesis defense',
-          src: '/thesis_def2.jpeg',
+          src: '/thesis_def2.webp',
           alt: 'Second thesis defense photo',
         },
       ],
