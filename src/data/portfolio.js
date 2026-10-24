@@ -46,8 +46,8 @@ export const profile = {
   heroHighlights: [
     {
       label: 'Now',
-      value: 'Junior Programmer',
-      detail: 'Leading RabDash DC · DiWA',
+      value: 'Leading RabDash DC',
+      detail: 'Web system + mobile app · DiWA Center',
     },
     {
       label: 'Stack',
@@ -55,9 +55,9 @@ export const profile = {
       detail: 'Express · MySQL · MongoDB',
     },
     {
-      label: 'Domain',
-      value: 'Public health analytics',
-      detail: 'Disease surveillance · Decision support',
+      label: 'Recognition',
+      value: 'Cum laude · UP Mindanao',
+      detail: 'Best Thesis finalist · ICIAH 2026 presenter',
     },
   ],
   contactLabel: 'Email me',

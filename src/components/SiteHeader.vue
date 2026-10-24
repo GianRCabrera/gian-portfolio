@@ -1,5 +1,5 @@
 <script setup>
-import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 const props = defineProps({
   navigation: {
@@ -38,6 +38,17 @@ const scheduleCallHref = computed(() => {
   return '#contact'
 })
 
+// The hero already shows the photo and a Resume button; the header adds them once it scrolls away.
+const pastHero = ref(false)
+const updatePastHero = () => {
+  const hero = document.getElementById('top')
+  pastHero.value = hero ? hero.getBoundingClientRect().bottom < 80 : window.scrollY > 400
+}
+onMounted(() => {
+  updatePastHero()
+  window.addEventListener('scroll', updatePastHero, { passive: true })
+})
+
 function openMobileMenu() {
   isMobileMenuOpen.value = true
 }
@@ -60,6 +71,7 @@ watch(isMobileMenuOpen, async (open) => {
 })
 
 onBeforeUnmount(() => {
+  window.removeEventListener('scroll', updatePastHero)
   if (typeof document === 'undefined') return
   document.documentElement.style.overflow = ''
 })
@@ -72,7 +84,11 @@ onBeforeUnmount(() => {
     >
       <div class="flex min-w-0 flex-1 items-center gap-3 md:flex-none md:flex-initial">
         <a href="#top" class="flex min-w-0 items-center gap-3">
-          <span class="flex h-10 w-10 shrink-0 overflow-hidden rounded-full border border-[var(--line)] bg-[var(--surface-raised)] sm:h-11 sm:w-11">
+          <span
+            class="flex h-10 shrink-0 overflow-hidden rounded-full border bg-[var(--surface-raised)] transition-all duration-300 sm:h-11"
+            :class="pastHero ? 'w-10 border-[var(--line)] opacity-100 sm:w-11' : '-mr-3 w-0 border-transparent opacity-0'"
+            :aria-hidden="!pastHero"
+          >
           <img
             :src="profile.photo.fallbackSrc || profile.photo.src"
             :srcset="profile.photo.srcSet || undefined"
@@ -118,7 +134,8 @@ onBeforeUnmount(() => {
           :href="profile.resumeUrl"
           target="_blank"
           rel="noopener noreferrer"
-          class="btn-primary inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:text-sm min-[1100px]:px-4 min-[1100px]:py-2.5"
+          class="btn-primary items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:text-sm min-[1100px]:px-4 min-[1100px]:py-2.5"
+          :class="pastHero ? 'inline-flex' : 'hidden'"
         >
           <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
