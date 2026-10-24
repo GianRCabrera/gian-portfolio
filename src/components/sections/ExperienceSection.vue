@@ -93,16 +93,14 @@ const groupKey = (group) =>
           Experience
         </p>
         <h2 class="text-3xl leading-tight font-semibold tracking-[-0.03em] text-[var(--ink-strong)] sm:text-4xl">
-          Experience.
+          Where I’ve worked.
         </h2>
         <p class="max-w-2xl text-base leading-relaxed text-[var(--ink-soft)]">
           Roles and milestones where I shipped UI, reporting workflows, and data-heavy features — from internships to production work.
         </p>
       </header>
 
-      <div
-        class="experience-shell space-y-6 rounded-[2rem] border border-[var(--line-strong)]/80 bg-[var(--surface)] p-6 sm:p-8"
-      >
+      <div>
         <div class="relative space-y-0">
           <div
             class="pointer-events-none absolute left-[0.8rem] top-10 bottom-10 hidden w-px bg-gradient-to-b from-[var(--line)]/25 via-[var(--line)]/18 to-transparent md:block"
@@ -185,13 +183,13 @@ const groupKey = (group) =>
                     class="mb-3 sm:mb-0"
                   />
 
-                  <div class="min-w-0 sm:pr-[9.5rem]">
+                  <div class="min-w-0 sm:pr-[12rem]">
                     <h3 class="text-[1.05rem] font-semibold leading-6 text-[var(--ink-strong)] sm:text-base">
                       {{ group.companyShort || group.company }}
                     </h3>
                     <p
                       v-if="group.companyShort"
-                      class="mt-1 text-xs leading-relaxed text-[var(--ink-muted)]"
+                      class="pt-1 text-xs leading-relaxed text-[var(--ink-muted)]"
                     >
                       {{ group.company }}
                     </p>
@@ -205,12 +203,11 @@ const groupKey = (group) =>
                     :class="[
                       'py-4 first:pt-0 last:pb-0',
                       roleIndex > 0 ? 'border-t border-[var(--line)]' : '',
-                      isCurrentRole(role) ? 'border-l-2 border-l-[var(--accent)]/35 pl-3 -ml-px' : '',
                     ]"
                   >
-                    <div class="flex min-w-0 flex-nowrap items-center justify-between gap-2">
+                    <div class="flex min-w-0 flex-wrap items-center justify-between gap-x-2 gap-y-1">
                       <p
-                        class="min-w-0 truncate text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-[var(--accent)]"
+                        class="min-w-0 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-[var(--accent)]"
                       >
                         {{ role.role }}
                       </p>
@@ -221,7 +218,7 @@ const groupKey = (group) =>
                         class="shrink-0"
                       />
                     </div>
-                    <p class="mt-2 text-sm leading-relaxed text-[var(--ink-muted)]">
+                    <p class="pt-2 text-sm leading-relaxed text-[var(--ink-muted)]">
                       {{ role.summary }}
                     </p>
                   </div>
@@ -244,7 +241,7 @@ const groupKey = (group) =>
                     absolute
                   />
 
-                  <div class="min-w-0 sm:pr-[9.5rem]">
+                  <div class="min-w-0 sm:pr-[12rem]">
                     <div class="flex flex-wrap items-center gap-2">
                       <h3 class="text-[1.05rem] font-semibold leading-6 text-[var(--ink-strong)] sm:text-base">
                         {{ group.companyShort || group.company }}
@@ -258,28 +255,28 @@ const groupKey = (group) =>
                     </div>
                     <p
                       v-if="group.companyShort"
-                      class="mt-1 text-xs leading-relaxed text-[var(--ink-muted)]"
+                      class="pt-1 text-xs leading-relaxed text-[var(--ink-muted)]"
                     >
                       {{ group.company }}
                     </p>
 
-                    <p class="mt-1 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">
+                    <p class="pt-1.5 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">
                       {{ group.roles[0].role }}
                     </p>
                   </div>
 
-                  <p class="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--ink-muted)]">
+                  <p class="max-w-2xl pt-3 text-sm leading-relaxed text-[var(--ink-muted)]">
                     {{ group.roles[0].summary }}
                   </p>
                 </div>
 
-                <ul class="mt-5 space-y-2.5 text-[var(--ink-soft)]">
+                <ul class="mt-4 space-y-2 text-sm text-[var(--ink-soft)]">
                   <li
                     v-for="highlight in (group.roles[0].highlights || []).slice(0, 2)"
                     :key="highlight"
                     class="flex gap-3 leading-snug"
                   >
-                    <span class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-[var(--accent)]" />
+                    <span class="mt-1.5 h-1.5 w-1.5 flex-none rounded-full bg-[var(--accent)]" />
                     <span>{{ highlight }}</span>
                   </li>
                 </ul>
@@ -296,7 +293,7 @@ const groupKey = (group) =>
           Capabilities
         </p>
         <h2 class="text-3xl leading-tight font-semibold tracking-[-0.03em] text-[var(--ink-strong)] sm:text-4xl">
-          Capabilities.
+          What I bring.
         </h2>
         <p class="max-w-2xl text-base leading-relaxed text-[var(--ink-soft)]">
           The strengths I bring to dashboard-heavy work — from UI craft to reporting workflows and collaboration.
@@ -336,7 +333,7 @@ const groupKey = (group) =>
           <div class="space-y-4 border-t border-[var(--line)] pt-6">
             <div>
               <p class="text-label text-[var(--ink-muted)]">Work style</p>
-              <p class="mt-3 text-sm leading-relaxed text-[var(--ink-soft)]">
+              <p class="pt-3 text-sm leading-relaxed text-[var(--ink-soft)]">
                 Calm, detail-oriented delivery — with a bias toward clarity, reliability, and useful UX.
               </p>
             </div>

@@ -385,9 +385,9 @@ section + section.section-shell {
 .rec-quote-clamp {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 5;
+  -webkit-line-clamp: 3;
   overflow: hidden;
-  max-height: 10rem;
+  max-height: 5.25rem;
 }
 
 .about-side-card:hover {
@@ -425,18 +425,6 @@ section + section.section-shell {
 }
 
 /* Experience timeline shell depth */
-.experience-shell {
-  box-shadow:
-    0 22px 52px rgba(32, 24, 16, 0.09),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5);
-}
-
-:root[data-theme='dark'] .experience-shell {
-  box-shadow:
-    0 22px 52px rgba(0, 0, 0, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
-}
-
 :root[data-theme='dark'] .capabilities-shell {
   box-shadow: 0 22px 52px rgba(0, 0, 0, 0.35);
 }

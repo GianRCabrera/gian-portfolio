@@ -151,7 +151,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
 </script>
 
 <template>
-  <section ref="el" id="gallery" class="section-shell space-y-7 pt-3">
+  <section ref="el" id="gallery" class="section-shell space-y-7 border-t border-[var(--line)] pt-9 sm:pt-10">
     <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
       <div>
         <p class="section-label text-sm font-semibold uppercase tracking-[0.28em] text-[var(--accent)]">

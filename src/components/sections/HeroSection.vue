@@ -11,6 +11,14 @@ const props = defineProps({
 
 const { el } = useScrollReveal()
 
+// Phones get a compact portrait beside the name; only one <img> is rendered so only one is downloaded.
+const desktopQuery = typeof window !== 'undefined' ? window.matchMedia('(min-width: 768px)') : null
+const isDesktop = ref(desktopQuery?.matches ?? true)
+const onDesktopChange = (event) => {
+  isDesktop.value = event.matches
+}
+desktopQuery?.addEventListener('change', onDesktopChange)
+
 const isTechModalOpen = ref(false)
 const techModalEl = ref(null)
 
@@ -49,6 +57,7 @@ watch(isTechModalOpen, async (isOpen) => {
 })
 
 onBeforeUnmount(() => {
+  desktopQuery?.removeEventListener('change', onDesktopChange)
   if (typeof document === 'undefined') return
   document.documentElement.style.overflow = ''
 })
@@ -62,7 +71,7 @@ onBeforeUnmount(() => {
   >
     <div class="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(27,110,97,0.4),transparent)]" />
 
-    <div class="relative grid items-start gap-3">
+    <div class="relative order-2 grid items-start gap-3 md:order-1">
       <div
         class="motion-card absolute -right-10 top-8 h-40 w-40 rounded-full bg-[radial-gradient(circle,_rgba(27,110,97,0.25),_transparent_70%)] blur-2xl"
       />
@@ -71,6 +80,7 @@ onBeforeUnmount(() => {
       />
 
       <figure
+        v-if="isDesktop"
         class="relative mx-auto w-full max-w-[16.5rem] self-start overflow-hidden rounded-[1.5rem] border border-[var(--line)] bg-[var(--surface-panel-strong)] shadow-[0_20px_44px_rgba(36,26,18,0.1)] sm:max-w-[17.5rem] md:mx-0 md:max-w-[15.5rem] lg:max-w-[17rem]"
       >
         <div class="relative aspect-[3/4] w-full overflow-hidden rounded-[1.45rem]">
@@ -117,9 +127,9 @@ onBeforeUnmount(() => {
         </div>
 
         <div class="flex flex-col items-center px-2 py-3 text-center">
-          <span class="text-2xl font-bold text-[var(--ink-strong)]" style="font-family: var(--font-heading)">1</span>
+          <span class="text-2xl font-bold text-[var(--ink-strong)]" style="font-family: var(--font-heading)">2</span>
           <span class="mt-0.5 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[var(--ink-muted)]"
-            >Published</span
+            >Talks</span
           >
         </div>
       </div>
@@ -186,23 +196,47 @@ onBeforeUnmount(() => {
       </div>
     </div>
 
-    <div class="relative z-10 flex w-full min-w-0 flex-col gap-5">
+    <div class="relative z-10 order-1 flex w-full min-w-0 flex-col gap-5 md:order-2">
       <div class="w-full">
         <p class="section-label text-sm font-semibold uppercase tracking-[0.32em] text-[var(--accent)]">
           Portfolio
         </p>
 
         <div class="mt-3 flex w-full flex-col gap-3 sm:mt-4 sm:gap-4">
-          <div class="flex w-full flex-col gap-1 sm:gap-1.5">
-            <h1 class="w-full font-semibold leading-[1.08] tracking-[-0.04em] text-[var(--ink-strong)]">
-              <span class="block gradient-text text-[clamp(1.55rem,3.6vw,2.65rem)]">
-                {{ profile.heroTitleLines?.[0] || profile.name }}
-              </span>
-            </h1>
+          <div class="flex w-full items-center gap-4">
+            <figure
+              v-if="!isDesktop"
+              class="relative h-24 w-[4.5rem] flex-none overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--surface-panel-strong)] shadow-[0_12px_28px_rgba(36,26,18,0.12)]"
+            >
+              <img
+                :src="profile.photo.fallbackSrc || profile.photo.src"
+                :srcset="profile.photo.srcSet || undefined"
+                sizes="72px"
+                :alt="profile.photo.alt"
+                class="h-full w-full object-cover object-[center_8%]"
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
+              />
+            </figure>
+            <div class="flex min-w-0 flex-1 flex-col gap-1 sm:gap-1.5">
+              <h1 class="w-full font-semibold leading-[1.08] tracking-[-0.04em] text-[var(--ink-strong)]">
+                <span class="block gradient-text text-[clamp(1.55rem,3.6vw,2.65rem)]">
+                  {{ profile.heroTitleLines?.[0] || profile.name }}
+                </span>
+              </h1>
 
-            <p class="text-lg font-semibold leading-snug text-[var(--ink-strong)] sm:text-xl">
-              {{ profile.heroTitleLines?.[1] || 'Software Developer · Researcher' }}
-            </p>
+              <p class="text-lg font-semibold leading-snug text-[var(--ink-strong)] sm:text-xl">
+                {{ profile.heroTitleLines?.[1] || 'Software Developer · Researcher' }}
+              </p>
+              <span
+                v-if="!isDesktop"
+                class="inline-flex w-fit items-center gap-1.5 rounded-full border border-green-600/25 bg-green-500/10 px-2.5 py-1 text-[0.7rem] font-semibold text-[var(--ink-strong)]"
+              >
+                <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500" aria-hidden="true"></span>
+                Open to roles
+              </span>
+            </div>
           </div>
 
           <div
@@ -283,7 +317,7 @@ onBeforeUnmount(() => {
             <span v-if="item.detail" class="text-[var(--ink-muted)]">{{ item.detail }}</span>
             <span
               v-if="profile.techStack"
-              class="mt-2 inline-flex items-center gap-1 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[var(--accent)]"
+              class="mt-2 flex w-fit items-center gap-1 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[var(--accent)]"
             >
               See all tech
               <span aria-hidden="true">→</span>

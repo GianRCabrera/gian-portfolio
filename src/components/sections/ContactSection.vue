@@ -63,6 +63,17 @@ const locationLine = computed(() => {
   return props.profile.location || 'Davao City, Philippines'
 })
 
+// Philippine time has no daylight saving, so the offset is fixed.
+const timezoneLine = computed(() => (props.profile.timezone ? `${props.profile.timezone} (UTC+8)` : ''))
+
+const scheduleCallUrl = computed(() => {
+  const url = props.profile.scheduleCallUrl
+  return typeof url === 'string' && /^https?:\/\//i.test(url) ? url : ''
+})
+
+// Split after "@" and "/" so long addresses wrap at those points instead of mid-word.
+const breakableParts = (text) => String(text || '').split(/(?<=[@/])/)
+
 const linkAriaLabel = (item) => item.ariaLabel || `${item.label}: ${item.description}`
 
 const cardKey = (item) => `${item.label}-${item.description}`
@@ -88,7 +99,7 @@ const onCopyEmail = async (event, item) => {
     id="contact"
     class="section-shell grid gap-7 rounded-[2rem] border border-[var(--line-strong)] bg-[var(--surface-panel-strong)] p-6 text-[var(--ink-strong)] shadow-[0_22px_60px_rgba(21,38,35,0.2)] sm:p-8 md:grid-cols-[minmax(0,1fr)_minmax(320px,0.9fr)] lg:grid-cols-[minmax(0,1fr)_minmax(360px,0.9fr)]"
   >
-    <div class="space-y-4">
+    <div class="flex flex-col gap-4">
       <div class="flex flex-wrap items-center gap-3">
         <p class="section-label text-sm font-semibold uppercase tracking-[0.28em] text-[var(--accent)]">
           Contact
@@ -111,7 +122,36 @@ const onCopyEmail = async (event, item) => {
         {{ contact.availability }}
       </p>
 
-      <div class="flex flex-wrap items-center gap-2 pt-5">
+      <div class="flex flex-wrap gap-3 pt-3">
+        <a
+          v-if="profile.contactHref"
+          :href="profile.contactHref"
+          class="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-medium shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+        >
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+            <path d="m22 6-10 7L2 6" />
+          </svg>
+          {{ profile.contactLabel || 'Email me' }}
+        </a>
+        <a
+          v-if="scheduleCallUrl"
+          :href="scheduleCallUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--line-strong)] px-6 py-3.5 text-sm font-medium transition hover:-translate-y-0.5 hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+          style="background: var(--button-secondary-bg); color: var(--button-secondary-text);"
+        >
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M8 2v3M16 2v3" />
+            <path d="M3.5 9h17" />
+            <path d="M6 4h12a2 2 0 0 1 2 2v13.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" />
+          </svg>
+          Book a 30-min call
+        </a>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2 pt-4 md:mt-auto">
         <span
           class="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface-raised)] px-4 py-2 text-sm text-[var(--ink-soft)]"
         >
@@ -121,10 +161,20 @@ const onCopyEmail = async (event, item) => {
           </svg>
           {{ locationLine }}
         </span>
+        <span
+          v-if="timezoneLine"
+          class="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface-raised)] px-4 py-2 text-sm text-[var(--ink-soft)]"
+        >
+          <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0 text-[var(--accent)]" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 7v5l3 2" />
+          </svg>
+          {{ timezoneLine }}
+        </span>
       </div>
     </div>
 
-    <div class="grid gap-4">
+    <div class="grid gap-3">
       <a
         v-for="item in safeLinks"
         :key="item?.label || item?.url"
@@ -136,7 +186,7 @@ const onCopyEmail = async (event, item) => {
             : { target: '_blank', rel: 'noopener noreferrer' }
         "
         :download="item.label === 'Resume' ? 'gian-cabrera-resume.pdf' : undefined"
-        class="contact-link-card hover-card group relative flex w-full min-w-0 gap-4 rounded-[1.6rem] border border-[var(--line-strong)] bg-[var(--surface-panel)] p-5 text-[var(--ink-strong)] transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+        class="contact-link-card hover-card group relative flex w-full min-w-0 items-center gap-4 rounded-[1.4rem] border border-[var(--line-strong)] bg-[var(--surface-panel)] px-5 py-4 text-[var(--ink-strong)] transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
       >
         <span
           class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[var(--line)] bg-[var(--surface-raised)] text-[var(--accent)] transition group-hover:border-[var(--accent)]/40"
@@ -173,9 +223,13 @@ const onCopyEmail = async (event, item) => {
             {{ item.label }}
           </p>
           <p
-            class="mt-2 min-w-0 break-words text-base font-medium leading-snug text-[var(--ink-strong)] [overflow-wrap:anywhere]"
+            class="min-w-0 break-words pt-1 text-sm font-medium leading-snug text-[var(--ink-strong)] sm:text-[0.95rem]"
           >
-            <span class="min-w-0 [overflow-wrap:anywhere]">{{ item.description }}</span>
+            <span class="min-w-0 [overflow-wrap:anywhere]"
+              ><template v-for="(part, index) in breakableParts(item.description)" :key="index"
+                ><wbr v-if="index" />{{ part }}</template
+              ></span
+            >
             <span v-if="item.hint" class="ml-2 text-xs font-normal uppercase tracking-wider text-[var(--ink-muted)]">
               {{ item.hint }}
             </span>

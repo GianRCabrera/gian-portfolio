@@ -33,7 +33,7 @@ const toggleExpanded = (item) => {
 
 const isExpanded = (item) => expandedKey.value === cardKey(item)
 
-const needsToggle = (item) => (item.quote?.length || 0) > 260
+const needsToggle = (item) => (item.quote?.length || 0) > 170
 
 const avatarFailed = ref(new Set())
 
@@ -86,10 +86,10 @@ const markAvatarFailed = (item) => {
       <article
         v-for="item in visibleRecommendations"
         :key="`${item.name}-${item.role}`"
-        class="rec-card hover-card group relative flex w-full flex-col overflow-hidden rounded-[1.6rem] border border-[var(--line-strong)] bg-[var(--surface)] p-7 shadow-[0_18px_44px_rgba(32,24,16,0.08)] sm:p-9"
+        class="rec-card hover-card group relative flex w-full flex-col overflow-hidden rounded-[1.6rem] border border-[var(--line-strong)] bg-[var(--surface)] p-6 shadow-[0_18px_44px_rgba(32,24,16,0.08)] sm:p-7"
         :class="isExpanded(item) ? 'ring-1 ring-[var(--accent)]/25' : ''"
       >
-        <div v-if="item.relationship" class="relative z-[1] mb-5">
+        <div v-if="item.relationship" class="relative z-[1] mb-4">
           <span
             class="rounded-full border border-[var(--line)] bg-[var(--surface-raised)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--ink-muted)]"
           >
@@ -97,7 +97,7 @@ const markAvatarFailed = (item) => {
           </span>
         </div>
         <div
-          class="pointer-events-none absolute left-6 top-[4.75rem] font-serif text-5xl leading-none text-[var(--accent)]/15 sm:text-6xl"
+          class="pointer-events-none absolute left-5 top-[4.1rem] font-serif text-5xl leading-none text-[var(--accent)]/15 sm:left-6 sm:top-[4.5rem]"
           aria-hidden="true"
         >
           “
@@ -108,14 +108,14 @@ const markAvatarFailed = (item) => {
         >
           <blockquote
             :class="[
-              'border-l-2 border-[var(--accent)]/25 pl-5 font-[family-name:var(--font-heading)] text-base italic leading-8 text-pretty text-[var(--ink-strong)] sm:text-lg',
+              'border-l-2 border-[var(--accent)]/25 pl-5 font-[family-name:var(--font-heading)] text-[0.98rem] italic leading-7 text-pretty text-[var(--ink-strong)]',
               !isExpanded(item) ? 'rec-quote-clamp' : '',
             ]"
           >
             {{ item.quote }}
           </blockquote>
         </div>
-        <div class="relative z-[1] mt-4 min-h-[2.25rem]">
+        <div class="relative z-[1] mt-3 min-h-[2.25rem]">
           <button
             v-if="needsToggle(item)"
             type="button"
@@ -126,7 +126,7 @@ const markAvatarFailed = (item) => {
             {{ isExpanded(item) ? 'Show less' : 'Read more' }}
           </button>
         </div>
-        <div class="mt-8 shrink-0 border-t border-[var(--line)] pt-6">
+        <div class="mt-5 shrink-0 border-t border-[var(--line)] pt-5">
           <component
             :is="item.linkedinUrl ? 'a' : 'div'"
             :href="item.linkedinUrl || undefined"

@@ -83,7 +83,6 @@ const requestOverviewHref = (project) => {
 }
 
 const cardKindLabel = (project) => project.cardKind || project.typeLabel
-const cardStatLabel = (project) => project.cardStat || project.resultLabel
 
 /** Placeholder preview: `chart` (dashboard) vs `form` (event / registration). */
 const previewAccent = (project) => project.previewAccent ?? 'chart'
@@ -122,15 +121,33 @@ const closeCaseStudy = () => {
   isCaseStudyOpen.value = false
 }
 
+/** Full-screen view of a project card's screenshot. */
+const zoomedProject = ref(null)
+const zoomCloseRef = ref(null)
+
+const openZoom = async (project) => {
+  zoomedProject.value = project
+  await nextTick()
+  zoomCloseRef.value?.focus?.()
+}
+
+const closeZoom = () => {
+  zoomedProject.value = null
+}
+
 const onKeydown = (event) => {
-  if (event.key === 'Escape' && isCaseStudyOpen.value) {
+  if (event.key !== 'Escape') return
+  if (zoomedProject.value) {
+    event.preventDefault()
+    closeZoom()
+  } else if (isCaseStudyOpen.value) {
     event.preventDefault()
     closeCaseStudy()
   }
 }
 
-watch(isCaseStudyOpen, (open) => {
-  document.body.style.overflow = open ? 'hidden' : ''
+watch([isCaseStudyOpen, zoomedProject], ([caseStudyOpen, zoomed]) => {
+  document.body.style.overflow = caseStudyOpen || zoomed ? 'hidden' : ''
 })
 
 watch(primaryProject, () => {
@@ -492,6 +509,40 @@ onUnmounted(() => {
       </div>
     </Teleport>
 
+    <Teleport to="body">
+      <div
+        v-if="zoomedProject"
+        class="fixed inset-0 z-[80] grid place-items-center bg-black/75 p-4 backdrop-blur-sm sm:p-6"
+        role="dialog"
+        aria-modal="true"
+        :aria-label="`${zoomedProject.title} screenshot`"
+        @click.self="closeZoom"
+      >
+        <div class="w-full max-w-5xl overflow-hidden rounded-[1.4rem] border border-white/10 bg-black/40 shadow-[0_30px_90px_rgba(0,0,0,0.55)]">
+          <div class="flex items-center justify-between gap-4 border-b border-white/10 px-4 py-3 sm:px-5">
+            <p class="min-w-0 truncate text-sm font-semibold text-white">{{ zoomedProject.title }}</p>
+            <button
+              ref="zoomCloseRef"
+              type="button"
+              class="inline-flex h-10 w-10 flex-none items-center justify-center rounded-full border border-white/15 bg-black/30 text-white transition hover:bg-black/45 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/70"
+              aria-label="Close screenshot"
+              @click="closeZoom"
+            >
+              ✕
+            </button>
+          </div>
+          <div class="grid place-items-center bg-black/30 p-3 sm:p-4">
+            <img
+              :src="zoomedProject.cardImage"
+              :alt="`${zoomedProject.title} screenshot`"
+              class="max-h-[78vh] w-full object-contain"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </div>
+    </Teleport>
+
     <div class="border-t border-[var(--line)] pt-10">
       <div class="flex items-center justify-between">
         <div>
@@ -517,20 +568,31 @@ onUnmounted(() => {
         >
           <div class="relative aspect-[16/10] w-full overflow-hidden bg-[var(--surface-raised)]">
             <div class="relative h-full w-full overflow-hidden">
-              <template v-if="project.cardImage">
+              <button
+                v-if="project.cardImage"
+                type="button"
+                class="group/zoom block h-full w-full cursor-zoom-in focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[var(--accent)]"
+                :aria-label="`Enlarge ${project.title} screenshot`"
+                @click="openZoom(project)"
+              >
                 <img
                   :src="project.cardImage"
                   :alt="`${project.title} preview`"
-                  class="h-full w-full object-cover contrast-[1.04] saturate-[1.02] transition-transform duration-500 ease-out group-hover:scale-105 motion-reduce:group-hover:scale-100"
-                  :class="project.highlightSecondary ? 'saturate-[0.98] contrast-[1.02]' : ''"
+                  class="h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105 motion-reduce:group-hover:scale-100"
                   loading="lazy"
                 />
-                <div
-                  class="pointer-events-none absolute inset-0"
-                  :class="project.highlightSecondary ? 'bg-black/18' : 'bg-black/10'"
+                <span
+                  class="pointer-events-none absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/50 px-2.5 py-1 text-[0.68rem] font-semibold text-white backdrop-blur transition sm:opacity-0 sm:group-hover/zoom:opacity-100 sm:group-focus-visible/zoom:opacity-100"
                   aria-hidden="true"
-                />
-              </template>
+                >
+                  <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 21l-4.3-4.3" />
+                    <circle cx="11" cy="11" r="7" />
+                    <path d="M11 8v6M8 11h6" />
+                  </svg>
+                  Enlarge
+                </span>
+              </button>
               <div
                 v-else
                 class="preview-mock-zoom relative h-full min-h-[168px] w-full transition-transform duration-500 ease-out group-hover:scale-[1.045] motion-reduce:group-hover:scale-100"
@@ -651,27 +713,11 @@ onUnmounted(() => {
               </div>
             </div>
 
-            <div class="absolute left-3 right-3 top-3 flex items-start justify-between gap-2">
-              <div class="flex max-w-[70%] items-center gap-2">
-                <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/30 bg-black/40 text-white backdrop-blur-sm">
-                  <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                    <rect x="3" y="3" width="18" height="18" rx="2" />
-                    <path d="M3 9h18M9 21V9" />
-                  </svg>
-                </span>
-                <span class="rounded-md border border-white/25 bg-black/45 px-2 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-white backdrop-blur-sm">
-                  {{ cardKindLabel(project) }}
-                </span>
-              </div>
-              <span class="max-w-[45%] truncate rounded-md border border-white/20 bg-black/40 px-2 py-1 text-right text-[0.68rem] font-medium leading-tight text-white/95 backdrop-blur-sm">
-                {{ cardStatLabel(project) }}
-              </span>
-            </div>
-
-            <div
-              class="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-[linear-gradient(180deg,transparent,rgba(16,16,16,0.45))]"
-              aria-hidden="true"
-            />
+            <span
+              class="pointer-events-none absolute left-3 top-3 rounded-md border border-white/25 bg-black/55 px-2 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-white backdrop-blur-sm"
+            >
+              {{ cardKindLabel(project) }}
+            </span>
           </div>
 
           <div class="flex flex-1 flex-col gap-2.5 p-6">
@@ -722,13 +768,6 @@ onUnmounted(() => {
               >
                 Live site
               </a>
-              <span
-                v-else
-                class="inline-flex cursor-not-allowed items-center justify-center rounded-full border border-dashed border-[var(--line)] bg-[var(--surface-raised)] px-4 py-2.5 text-xs font-medium text-[var(--ink-muted)] opacity-75"
-                aria-disabled="true"
-              >
-                Live site
-              </span>
             </div>
           </div>
         </article>

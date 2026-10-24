@@ -43,8 +43,7 @@ export const profile = {
   },
   /** Hero lead copy (short paragraphs, top-to-bottom). */
   introParagraphs: [
-    'Junior Programmer at the DiWA Center (UP Mindanao), where I lead RabDash DC: the rabies data management and analytics system that replaced the Davao City Veterinarian’s Office’s paper forms and saves its team significant time on encoding and reporting. I build dashboards, reporting workflows, and decision-support tools for disease surveillance and public health.',
-    'I work best in data-heavy environments where clarity, reliability, and usability matter. From analytics dashboards to geospatial and workflow systems, I focus on software that holds up in real-world use.',
+    'Junior Programmer at the DiWA Center (UP Mindanao), where I lead RabDash DC: the rabies data system that replaced the Davao City Veterinarian’s Office’s paper forms. I build dashboards and decision-support tools for disease surveillance and public health.',
   ],
   /** Short chips under the lead (three items; highlights carry NOW/DOMAIN/STACK). */
   heroFocusAreas: [],
@@ -184,7 +183,6 @@ export const projects = [
     featuredImage: null,
     cardImage: '/iwomb2025.webp',
     cardKind: 'Public site',
-    cardStat: 'Google Sites',
     highlightSecondary: false,
     liveUrl: 'https://sites.google.com/up.edu.ph/iwomb2025/',
     repoUrl: '',
@@ -215,7 +213,6 @@ export const projects = [
     featuredImage: null,
     cardImage: '/dashboard1.webp',
     cardKind: 'Internal product',
-    cardStat: 'Hybrid reporting',
     highlightSecondary: true,
     liveUrl: '',
     repoUrl: '',
@@ -247,7 +244,6 @@ export const projects = [
     featuredImage: null,
     cardImage: '/rabdash.webp',
     cardKind: 'Live system',
-    cardStat: 'Charts in production',
     highlightSecondary: false,
     liveUrl: 'https://rabdash.com/',
     repoUrl: '',
