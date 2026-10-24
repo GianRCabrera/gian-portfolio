@@ -1,5 +1,5 @@
 /**
- * GitHub: profile/social links use gian-r-cabrera; RabDash Mobile repo is still under GianSolo-aok.
+ * GitHub: profile/social links use gian-r-cabrera; RabDash Mobile repo is under GianRCabrera (formerly GianSolo-aok).
  * Update its repoUrl once the repo is transferred to gian-r-cabrera.
  */
 export const navigation = [
@@ -156,7 +156,7 @@ export const projects = [
     ],
     screens: [],
     liveUrl: '',
-    repoUrl: 'https://github.com/GianSolo-aok/Rabdash_Mobile',
+    repoUrl: 'https://github.com/GianRCabrera/Rabdash_Mobile',
     caseStudyUrl: '/rabdash-dc-mobile/',
   },
   {
