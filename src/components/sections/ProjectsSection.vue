@@ -520,7 +520,7 @@ onUnmounted(() => {
         :aria-label="`${zoomedProject.title} screenshot`"
         @click.self="closeZoom"
       >
-        <div class="w-full max-w-5xl overflow-hidden rounded-[1.4rem] border border-white/10 bg-black/40 shadow-[0_30px_90px_rgba(0,0,0,0.55)]">
+        <div class="max-h-full w-full max-w-5xl overflow-y-auto overscroll-contain rounded-[1.4rem] border border-white/10 bg-black/40 shadow-[0_30px_90px_rgba(0,0,0,0.55)]">
           <div class="flex items-center justify-between gap-4 border-b border-white/10 px-4 py-3 sm:px-5">
             <p class="min-w-0 truncate text-sm font-semibold text-white">{{ zoomedProject.title }}</p>
             <button
@@ -537,7 +537,7 @@ onUnmounted(() => {
             <img
               :src="zoomedProject.cardImage"
               :alt="`${zoomedProject.title} screenshot`"
-              class="max-h-[78vh] w-full object-contain"
+              class="max-h-[max(12rem,min(78vh,calc(100dvh-9rem)))] w-full object-contain"
               decoding="async"
             />
           </div>

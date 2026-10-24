@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useScrollReveal } from '../../composables/useScrollReveal'
 import { useSwipe } from '../../composables/useSwipe'
 
@@ -12,399 +12,194 @@ const props = defineProps({
 
 const { el } = useScrollReveal()
 
-const activeEvent = ref(0)
-const activePhoto = ref(0)
-const isLightboxOpen = ref(false)
-const isPortrait = ref(false)
-
 const events = computed(() => (Array.isArray(props.gallery?.events) ? props.gallery.events : []).filter(Boolean))
 
-// Back-compat: if `gallery.items` exists, treat it as a single unnamed event.
-const legacyItems = computed(() => (Array.isArray(props.gallery?.items) ? props.gallery.items : []).filter(Boolean))
-const normalizedEvents = computed(() => {
-  if (events.value.length) return events.value
-  if (!legacyItems.value.length) return []
-  return [
-    {
-      title: props.gallery?.title || 'Gallery',
-      meta: '',
-      photos: legacyItems.value,
-    },
-  ]
-})
+const photosOf = (event) => (Array.isArray(event?.photos) ? event.photos.filter(Boolean) : [])
+const coverOf = (event) => event.cover || photosOf(event)[0]?.src || ''
+const yearOf = (event) => event.date?.match(/\d{4}/)?.[0] || ''
 
-const eventCount = computed(() => normalizedEvents.value.length)
-const hasMultipleEvents = computed(() => eventCount.value > 1)
+// Full-screen viewer for one event's photos
+const openEvent = ref(null)
+const activePhoto = ref(0)
+const closeButtonRef = ref(null)
+let returnFocusTo = null
 
-const clampEventIndex = (value) => {
-  const n = eventCount.value
-  if (!n) return 0
-  const next = value % n
-  return next < 0 ? next + n : next
-}
-
-const setActiveEvent = (value) => {
-  activeEvent.value = clampEventIndex(value)
-}
-
-const goPrevEvent = () => setActiveEvent(activeEvent.value - 1)
-const goNextEvent = () => setActiveEvent(activeEvent.value + 1)
-
-const photos = computed(() => {
-  const currentEvent = normalizedEvents.value[activeEvent.value]
-  const raw = currentEvent?.photos
-  return Array.isArray(raw) ? raw.filter(Boolean) : []
-})
-
-const photoCount = computed(() => photos.value.length)
+const viewerPhotos = computed(() => photosOf(openEvent.value))
+const photoCount = computed(() => viewerPhotos.value.length)
 const hasMultiplePhotos = computed(() => photoCount.value > 1)
-const photoCounterLabel = computed(() => (photoCount.value ? `${activePhoto.value + 1} / ${photoCount.value}` : ''))
-const eventCounterLabel = computed(() => (eventCount.value ? `${activeEvent.value + 1} / ${eventCount.value}` : ''))
+const current = computed(() => viewerPhotos.value[activePhoto.value] || null)
 
-const clampPhotoIndex = (value) => {
-  const n = photoCount.value
-  if (!n) return 0
-  const next = value % n
-  return next < 0 ? next + n : next
-}
-
-const setActivePhoto = (value) => {
-  activePhoto.value = clampPhotoIndex(value)
-}
-
-const goPrev = () => setActivePhoto(activePhoto.value - 1)
-const goNext = () => setActivePhoto(activePhoto.value + 1)
-
-const openLightbox = () => {
-  if (!current.value?.src) return
-  isLightboxOpen.value = true
-}
-
-const closeLightbox = () => {
-  isLightboxOpen.value = false
-}
-
-const currentEvent = computed(() => normalizedEvents.value[activeEvent.value] || null)
-const current = computed(() => photos.value[activePhoto.value] || null)
-
-const updateOrientation = (src) => {
-  if (!src) {
-    isPortrait.value = false
-    return
-  }
-
-  const img = new Image()
-  img.onload = () => {
-    if (!img.naturalWidth || !img.naturalHeight) {
-      isPortrait.value = false
-      return
-    }
-    isPortrait.value = img.naturalHeight > img.naturalWidth
-  }
-  img.onerror = () => {
-    isPortrait.value = false
-  }
-  img.src = src
-}
-
-const thumbStrip = ref(null)
-
-watch(activeEvent, (index) => {
+const openViewer = async (event, trigger) => {
+  returnFocusTo = trigger || null
+  openEvent.value = event
   activePhoto.value = 0
+  await nextTick()
+  closeButtonRef.value?.focus?.()
+}
 
-  // Keep the active thumbnail visible; scroll only the strip, never the page.
-  const strip = thumbStrip.value
-  const thumb = strip?.children?.[index]
-  if (!strip || !thumb) return
-  const left = thumb.offsetLeft - (strip.clientWidth - thumb.offsetWidth) / 2
-  strip.scrollTo({ left: Math.max(0, left), behavior: 'smooth' })
+const closeViewer = () => {
+  openEvent.value = null
+  returnFocusTo?.focus?.()
+  returnFocusTo = null
+}
+
+const goTo = (index) => {
+  const n = photoCount.value
+  if (!n) return
+  activePhoto.value = ((index % n) + n) % n
+}
+const goPrev = () => goTo(activePhoto.value - 1)
+const goNext = () => goTo(activePhoto.value + 1)
+
+// Follow a "See the talk" link from inside the viewer: close first, then let the hash navigate.
+const followRelated = () => {
+  openEvent.value = null
+  returnFocusTo = null
+}
+
+const viewerPhotoArea = ref(null)
+useSwipe(viewerPhotoArea, {
+  onLeft: () => hasMultiplePhotos.value && goNext(),
+  onRight: () => hasMultiplePhotos.value && goPrev(),
 })
-
-watch(
-  () => current.value?.src,
-  (src) => updateOrientation(src),
-  { immediate: true }
-)
 
 const onKeyDown = (event) => {
-  if (isLightboxOpen.value && event.key === 'Escape') {
+  if (!openEvent.value) return
+  if (event.key === 'Escape') {
     event.preventDefault()
-    closeLightbox()
-    return
-  }
-  if (!hasMultiplePhotos.value) return
-  if (event.key === 'ArrowLeft') {
+    closeViewer()
+  } else if (event.key === 'ArrowLeft' && hasMultiplePhotos.value) {
     event.preventDefault()
     goPrev()
-  }
-  if (event.key === 'ArrowRight') {
+  } else if (event.key === 'ArrowRight' && hasMultiplePhotos.value) {
     event.preventDefault()
     goNext()
   }
 }
 
-watch(isLightboxOpen, (open) => {
-  document.documentElement.style.overflow = open ? 'hidden' : ''
+watch(openEvent, (value) => {
+  document.documentElement.style.overflow = value ? 'hidden' : ''
 })
 
-// Swipe between photos on touch screens, inline and in the full-screen viewer.
-const photoArea = ref(null)
-const lightboxPhotoArea = ref(null)
-useSwipe(photoArea, { onLeft: () => hasMultiplePhotos.value && goNext(), onRight: () => hasMultiplePhotos.value && goPrev() })
-useSwipe(lightboxPhotoArea, { onLeft: () => hasMultiplePhotos.value && goNext(), onRight: () => hasMultiplePhotos.value && goPrev() })
-
 onMounted(() => window.addEventListener('keydown', onKeyDown))
-onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
+onUnmounted(() => {
+  window.removeEventListener('keydown', onKeyDown)
+  document.documentElement.style.overflow = ''
+})
 </script>
 
 <template>
   <section ref="el" id="gallery" class="section-shell space-y-7 border-t border-[var(--line)] pt-9 sm:pt-10">
-    <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-      <div>
-        <p class="section-label text-sm font-semibold uppercase tracking-[0.28em] text-[var(--accent)]">
-          {{ gallery.title || 'Gallery' }}
-        </p>
-        <h2 class="mt-3 text-3xl leading-tight font-semibold tracking-[-0.03em] text-[var(--ink-strong)] sm:text-4xl">
-          {{ gallery.heading || 'Moments in tech.' }}
-        </h2>
-        <p v-if="gallery.intro" class="mt-3 max-w-xl text-base leading-relaxed text-[var(--ink-soft)]">
-          {{ gallery.intro }}
-        </p>
-      </div>
-      <span
-        v-if="!normalizedEvents.length"
-        class="w-fit rounded-full border border-[var(--line)] bg-[var(--surface-raised)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--ink-muted)]"
-      >
-        Add photos soon
-      </span>
+    <div>
+      <p class="section-label text-sm font-semibold uppercase tracking-[0.28em] text-[var(--accent)]">
+        {{ gallery.title || 'Gallery' }}
+      </p>
+      <h2 class="pt-3 text-3xl leading-tight font-semibold tracking-[-0.03em] text-[var(--ink-strong)] sm:text-4xl">
+        {{ gallery.heading || 'Moments in tech.' }}
+      </h2>
+      <p v-if="gallery.intro" class="max-w-xl pt-3 text-base leading-relaxed text-[var(--ink-soft)]">
+        {{ gallery.intro }}
+      </p>
     </div>
 
-    <div v-if="normalizedEvents.length" class="space-y-3">
-      <figure class="mx-auto w-full max-w-2xl overflow-hidden rounded-[1.6rem] border border-[var(--line-strong)] bg-[var(--surface)] shadow-[0_18px_44px_rgba(32,24,16,0.08)] sm:max-w-3xl">
-        <div ref="photoArea" class="relative aspect-[5/4] w-full overflow-hidden bg-[var(--surface-panel-soft)] sm:aspect-[16/9]">
-          <button
-            v-if="current?.src"
-            type="button"
-            class="group relative h-full w-full cursor-zoom-in"
-            :aria-label="`Open photo in full screen${current?.title ? `: ${current.title}` : ''}`"
-            @click="openLightbox"
-          >
+    <ul v-if="events.length" class="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
+      <li
+        v-for="event in events"
+        :key="event.title"
+        class="hover-card group flex flex-col overflow-hidden rounded-[1.2rem] border border-[var(--line-strong)] bg-[var(--surface)] shadow-[0_14px_34px_rgba(32,24,16,0.07)]"
+      >
+        <button
+          type="button"
+          class="flex flex-1 flex-col text-left focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-[var(--accent)]"
+          :aria-label="`View ${photosOf(event).length} photos from ${event.title}`"
+          @click="openViewer(event, $event.currentTarget)"
+        >
+          <span class="relative block aspect-[4/3] w-full overflow-hidden bg-[var(--surface-panel-soft)]">
             <img
-              :src="current.src"
+              v-if="coverOf(event)"
+              :src="coverOf(event)"
               alt=""
-              class="pointer-events-none absolute inset-0 h-full w-full object-cover blur-2xl saturate-125"
-              :class="isPortrait ? 'opacity-60 scale-[1.14]' : 'opacity-30 scale-[1.08]'"
-              loading="lazy"
-              decoding="async"
-              aria-hidden="true"
-            />
-            <div
-              class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(27,110,97,0.16),transparent_55%),radial-gradient(circle_at_70%_80%,rgba(186,111,77,0.14),transparent_60%)]"
-              aria-hidden="true"
-            />
-            <img
-              :src="current.src"
-              :alt="current.alt || current.title || 'Gallery photo'"
-              class="h-full w-full object-contain transition duration-300 group-hover:scale-[1.01]"
-              :class="isPortrait ? 'scale-[1.06] contrast-[1.14] saturate-[1.18] drop-shadow-[0_26px_55px_rgba(0,0,0,0.18)]' : 'contrast-[1.12] saturate-[1.14]'"
+              class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04] motion-reduce:group-hover:scale-100"
               loading="lazy"
               decoding="async"
             />
-            <div
-              class="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100"
+            <span
+              v-if="yearOf(event)"
+              class="absolute left-2 top-2 rounded-full bg-black/55 px-2 py-0.5 text-[0.68rem] font-semibold tracking-[0.08em] text-white backdrop-blur"
               aria-hidden="true"
             >
-              <div class="absolute inset-x-0 bottom-0 h-24 bg-[linear-gradient(180deg,transparent,rgba(16,16,16,0.42))]" />
-              <div class="absolute inset-0 bg-black/5 opacity-0 transition group-hover:opacity-100" />
-              <div class="absolute bottom-3 right-3 inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
-                <svg aria-hidden="true" viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 21l-4.3-4.3" />
-                  <circle cx="11" cy="11" r="7" />
-                  <path d="M11 8v6M8 11h6" />
-                </svg>
-                <span>Zoom</span>
-              </div>
-            </div>
-          </button>
-          <div
-            v-else
-            class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(27,110,97,0.18),transparent_55%),radial-gradient(circle_at_70%_80%,rgba(186,111,77,0.16),transparent_60%)]"
-            aria-hidden="true"
-          />
-          <div
-            v-if="!current?.src"
-            class="absolute inset-0 grid place-items-center"
-            aria-hidden="true"
-          >
-            <div class="rounded-[1.1rem] border border-[var(--line)] bg-[var(--surface)] px-5 py-3 text-center shadow-[0_10px_24px_rgba(32,24,16,0.08)]">
-              <p class="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">Add photos</p>
-              <p class="mt-1 text-xs text-[var(--ink-muted)]">Events · demos · defense</p>
-            </div>
-          </div>
-
-          <div v-if="hasMultiplePhotos" class="pointer-events-none absolute inset-0 flex items-center justify-between px-2.5">
-            <button
-              type="button"
-              class="pointer-events-auto inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-[var(--surface)]/70 text-[var(--ink-strong)] shadow-[0_12px_24px_rgba(0,0,0,0.12)] backdrop-blur transition hover:scale-[1.03] hover:bg-[var(--surface)] hover:shadow-[0_16px_30px_rgba(0,0,0,0.16)] active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
-              aria-label="Previous photo"
-              @click="goPrev"
-            >
-              <svg aria-hidden="true" viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
-                <path d="M10.5 3.5 6 8l4.5 4.5" />
-              </svg>
-            </button>
-            <button
-              type="button"
-              class="pointer-events-auto inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-[var(--surface)]/70 text-[var(--ink-strong)] shadow-[0_12px_24px_rgba(0,0,0,0.12)] backdrop-blur transition hover:scale-[1.03] hover:bg-[var(--surface)] hover:shadow-[0_16px_30px_rgba(0,0,0,0.16)] active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
-              aria-label="Next photo"
-              @click="goNext"
-            >
-              <svg aria-hidden="true" viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
-                <path d="M5.5 12.5 10 8 5.5 3.5" />
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <figcaption class="space-y-1.5 border-t border-[var(--line)] px-5 py-4">
-          <p class="text-[1.05rem] font-semibold leading-snug text-[var(--ink-strong)] sm:text-lg">
-            {{ currentEvent?.title || current?.title }}
-          </p>
-          <p v-if="currentEvent?.meta || current?.meta" class="text-sm leading-6 text-[var(--ink-muted)]">
-            {{ currentEvent?.meta || current?.meta }}
-          </p>
-          <div class="pt-1">
-            <span
-              v-if="current?.title"
-              class="inline-flex items-center rounded-full border border-[var(--accent)]/18 bg-[var(--accent)]/6 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[var(--ink-muted)]"
-            >
-              {{ current.title }}
-            </span>
-          </div>
-        </figcaption>
-      </figure>
-
-      <div class="mx-auto w-full max-w-2xl space-y-2 sm:max-w-3xl">
-        <!-- Event-level label (one box) -->
-        <div
-          class="grid grid-cols-[auto_1fr_auto] items-center gap-3 rounded-[1.05rem] border border-[var(--line)] bg-[var(--surface-panel)] px-4 py-2 text-[var(--ink-strong)] shadow-[0_10px_22px_rgba(32,24,16,0.05)]"
-          :aria-label="`Event: ${currentEvent?.title || 'Gallery event'}`"
-        >
-          <div v-if="hasMultipleEvents" class="flex items-center gap-2">
-            <button
-              type="button"
-              class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface-raised)] text-[var(--ink-strong)] transition hover:scale-[1.02] hover:border-[var(--accent)]/35 hover:bg-[var(--surface)] active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
-              aria-label="Previous event"
-              @click="goPrevEvent"
-            >
-              <svg aria-hidden="true" viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
-                <path d="M10.5 3.5 6 8l4.5 4.5" />
-              </svg>
-            </button>
-            <button
-              type="button"
-              class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface-raised)] text-[var(--ink-strong)] transition hover:scale-[1.02] hover:border-[var(--accent)]/35 hover:bg-[var(--surface)] active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
-              aria-label="Next event"
-              @click="goNextEvent"
-            >
-              <svg aria-hidden="true" viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
-                <path d="M5.5 12.5 10 8 5.5 3.5" />
-              </svg>
-            </button>
-          </div>
-          <div class="min-w-0 text-center">
-            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--ink-muted)]">
-              {{ hasMultipleEvents ? `Event ${eventCounterLabel}` : 'Event' }}
-            </p>
-          </div>
-          <div class="flex justify-end">
-            <span
-              v-if="hasMultiplePhotos"
-              class="rounded-full border border-[var(--line)] bg-[var(--surface-raised)] px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-[var(--ink-muted)]"
-            >
-              Photo {{ photoCounterLabel }}
-            </span>
-          </div>
-        </div>
-
-        <!-- Jump straight to any event -->
-        <div
-          v-if="hasMultipleEvents"
-          ref="thumbStrip"
-          class="flex snap-x gap-2.5 overflow-x-auto px-0.5 pb-2 pt-1"
-          aria-label="Jump to an event"
-        >
-          <button
-            v-for="(event, index) in normalizedEvents"
-            :key="`${event.title}-${index}`"
-            type="button"
-            class="group flex w-28 flex-none snap-start flex-col justify-start overflow-hidden rounded-[0.9rem] border bg-[var(--surface)] text-left transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:w-32"
-            :class="
-              index === activeEvent
-                ? 'border-[var(--accent)] shadow-[0_8px_20px_rgba(27,110,97,0.16)]'
-                : 'border-[var(--line)] opacity-80 hover:border-[var(--accent)]/40 hover:opacity-100'
-            "
-            :aria-current="index === activeEvent ? 'true' : undefined"
-            :aria-label="`Show event: ${event.title}`"
-            @click="setActiveEvent(index)"
-          >
-            <span class="block aspect-[4/3] w-full overflow-hidden bg-[var(--surface-panel-soft)]">
-              <img
-                v-if="event.cover || event.photos?.[0]?.src"
-                :src="event.cover || event.photos[0].src"
-                alt=""
-                class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.04]"
-                loading="lazy"
-                decoding="async"
-              />
+              {{ yearOf(event) }}
             </span>
             <span
-              class="line-clamp-2 px-2 py-1.5 text-[0.68rem] leading-snug font-semibold text-[var(--ink-strong)]"
+              class="absolute bottom-2 right-2 inline-flex items-center gap-1 rounded-full bg-black/55 px-2 py-0.5 text-[0.68rem] font-semibold text-white backdrop-blur"
+              aria-hidden="true"
             >
+              <svg viewBox="0 0 24 24" class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <circle cx="9" cy="11" r="2" />
+                <path d="m21 17-5-5-8 7" />
+              </svg>
+              {{ photosOf(event).length }}
+            </span>
+          </span>
+          <span class="flex flex-1 flex-col gap-1 px-3 py-2.5 sm:px-4 sm:py-3">
+            <span class="line-clamp-2 text-sm leading-snug font-semibold text-[var(--ink-strong)]">
               {{ event.shortTitle || event.title }}
             </span>
-          </button>
-        </div>
-      </div>
-    </div>
+            <span v-if="event.date" class="text-xs text-[var(--ink-muted)]">{{ event.date }}</span>
+          </span>
+        </button>
+        <a
+          v-if="event.related"
+          :href="event.related.href"
+          class="border-t border-[var(--line)] px-3 py-2 text-xs font-semibold text-[var(--accent)] transition hover:bg-[var(--surface-raised)] focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-[var(--accent)] sm:px-4"
+        >
+          {{ event.related.label }} →
+        </a>
+      </li>
+    </ul>
+
+    <p
+      v-if="!events.length"
+      class="w-fit rounded-full border border-[var(--line)] bg-[var(--surface-raised)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--ink-muted)]"
+    >
+      Add photos soon
+    </p>
 
     <Teleport to="body">
       <div
-        v-if="isLightboxOpen"
-        class="fixed inset-0 z-[80] grid place-items-center bg-black/70 p-4 backdrop-blur-sm sm:p-6"
+        v-if="openEvent"
+        class="fixed inset-0 z-[80] grid place-items-center bg-black/75 p-3 backdrop-blur-sm sm:p-6"
         role="dialog"
         aria-modal="true"
-        :aria-label="`Gallery photo: ${currentEvent?.title || 'Event'}`"
-        @click.self="closeLightbox"
+        :aria-label="`Photos: ${openEvent.title}`"
+        @click.self="closeViewer"
       >
-        <div class="w-full max-w-5xl overflow-hidden rounded-[1.4rem] border border-white/10 bg-black/40 shadow-[0_30px_90px_rgba(0,0,0,0.55)]">
-          <div class="flex items-center justify-between gap-4 border-b border-white/10 px-4 py-3 sm:px-5">
+        <div class="flex max-h-full w-full max-w-5xl flex-col overflow-y-auto overscroll-contain rounded-[1.4rem] border border-white/10 bg-[#101614]/90 shadow-[0_30px_90px_rgba(0,0,0,0.55)]">
+          <div class="flex items-start justify-between gap-4 border-b border-white/10 px-4 py-3 sm:px-5">
             <div class="min-w-0">
-              <p class="truncate text-sm font-semibold text-white">
-                {{ currentEvent?.title || 'Gallery' }}
-              </p>
-              <p v-if="currentEvent?.meta" class="mt-0.5 truncate text-xs text-white/70">
-                {{ currentEvent.meta }}
-              </p>
+              <p class="text-sm font-semibold leading-snug text-white">{{ openEvent.title }}</p>
+              <p v-if="openEvent.meta" class="pt-0.5 text-xs text-white/75">{{ openEvent.meta }}</p>
             </div>
             <button
+              ref="closeButtonRef"
               type="button"
-              class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-black/30 text-white transition hover:bg-black/45 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/70"
-              aria-label="Close full screen viewer"
-              @click="closeLightbox"
+              class="inline-flex h-10 w-10 flex-none items-center justify-center rounded-full border border-white/15 bg-black/30 text-white transition hover:bg-black/45 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/70"
+              aria-label="Close photos"
+              @click="closeViewer"
             >
               ✕
             </button>
           </div>
 
-          <div ref="lightboxPhotoArea" class="relative bg-black/30">
+          <div ref="viewerPhotoArea" class="relative flex-none bg-black/30">
             <div class="grid place-items-center p-3 sm:p-4">
               <img
                 v-if="current?.src"
+                :key="current.src"
                 :src="current.src"
-                :alt="current.alt || current.title || 'Gallery photo'"
-                class="max-h-[72vh] w-full object-contain"
-                loading="eager"
+                :alt="current.alt || current.title || 'Event photo'"
+                class="max-h-[max(12rem,min(68vh,calc(100dvh-19rem)))] w-full object-contain"
                 decoding="async"
               />
             </div>
@@ -412,7 +207,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
             <div v-if="hasMultiplePhotos" class="pointer-events-none absolute inset-0 flex items-center justify-between px-2.5 sm:px-3.5">
               <button
                 type="button"
-                class="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-black/35 text-white backdrop-blur transition hover:bg-black/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/70"
+                class="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-black/40 text-white backdrop-blur transition hover:bg-black/55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/70"
                 aria-label="Previous photo"
                 @click="goPrev"
               >
@@ -422,7 +217,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
               </button>
               <button
                 type="button"
-                class="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-black/35 text-white backdrop-blur transition hover:bg-black/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/70"
+                class="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-black/40 text-white backdrop-blur transition hover:bg-black/55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/70"
                 aria-label="Next photo"
                 @click="goNext"
               >
@@ -433,18 +228,37 @@ onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
             </div>
           </div>
 
-          <div class="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 px-4 py-3 text-xs text-white/70 sm:px-5">
-            <p class="min-w-0 truncate">
-              <span v-if="current?.title" class="font-semibold text-white">{{ current.title }}</span>
-              <span v-if="current?.meta" class="ml-2">{{ current.meta }}</span>
-            </p>
-            <span v-if="photoCount" class="flex-none rounded-full border border-white/15 bg-black/25 px-3 py-1 font-semibold uppercase tracking-[0.14em] text-white/70">
-              {{ activePhoto + 1 }} / {{ photoCount }}
-            </span>
+          <div class="flex flex-col gap-2 border-t border-white/10 px-4 py-3 sm:px-5">
+            <div class="flex flex-wrap items-center gap-2">
+              <span
+                v-if="current?.title"
+                class="rounded-full border border-white/20 bg-white/10 px-2.5 py-0.5 text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-white"
+              >
+                {{ current.title }}
+              </span>
+              <span v-if="current?.meta && current.meta !== openEvent.title" class="text-xs text-white/75">{{ current.meta }}</span>
+              <span v-if="hasMultiplePhotos" class="ml-auto flex items-center gap-1.5" aria-hidden="true">
+                <span
+                  v-for="(photo, index) in viewerPhotos"
+                  :key="photo.src"
+                  class="h-1.5 rounded-full transition-all"
+                  :class="index === activePhoto ? 'w-4 bg-white' : 'w-1.5 bg-white/35'"
+                />
+              </span>
+            </div>
+            <p v-if="current?.alt" class="line-clamp-3 text-sm leading-relaxed text-white/90">{{ current.alt }}</p>
+            <p class="sr-only" aria-live="polite">Photo {{ activePhoto + 1 }} of {{ photoCount }}</p>
+            <a
+              v-if="openEvent.related"
+              :href="openEvent.related.href"
+              class="w-fit text-sm font-semibold text-[#6fd2bb] underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/70"
+              @click="followRelated"
+            >
+              {{ openEvent.related.label }} →
+            </a>
           </div>
         </div>
       </div>
     </Teleport>
   </section>
 </template>
-

@@ -466,10 +466,15 @@ export const gallery = {
   title: 'Gallery',
   heading: 'Moments in tech.',
   intro: 'Selected moments from conferences, presentations, demos, and milestones in my journey in tech.',
-  /** Newest first. `cover`: small 320px thumbnail (falls back to the first photo); `shortTitle`: label under it (falls back to title). */
+  /**
+   * Newest first; events are grouped by the year in `date`.
+   * `cover`: card image (falls back to the first photo); `shortTitle`: card label (falls back to title);
+   * `related`: optional link shown on the card and in the viewer. Each photo's `title` (badge) and `alt` show as its caption.
+   */
   events: [
     {
       title: 'Regional Science, Technology, and Innovation Week (RSTW) 2026',
+      date: 'Oct 17, 2026',
       shortTitle: 'RSTW 2026',
       meta: 'SMX Convention Center Davao · Oct 17, 2026 · DiWA Center exhibit',
       cover: '/gallery-thumbs/RSTW_1.webp',
@@ -484,7 +489,7 @@ export const gallery = {
           title: 'DEMO',
           meta: 'RSTW 2026',
           src: '/RSTW_2.webp',
-          alt: 'Demonstrating the DiWA app on a tablet to students at RSTW 2026',
+          alt: 'Demonstrating the DiWA app to a group of students at RSTW 2026',
         },
         {
           title: 'DEMO',
@@ -496,6 +501,8 @@ export const gallery = {
     },
     {
       title: '16th Health R&D Expo and Mentorship Program 2026',
+      date: 'Oct 12–13, 2026',
+      related: { label: 'See the talk', href: '#research' },
       shortTitle: 'Health R&D Expo 2026',
       meta: 'World Palace Hotel, Davao City · Oct 12–13, 2026 · DiWA PLUS presentation',
       cover: '/gallery-thumbs/Mentorship_program_2.webp',
@@ -516,6 +523,8 @@ export const gallery = {
     },
     {
       title: 'International Conference for Interdisciplinary Approaches to Health (ICIAH) 2026',
+      date: 'Sep 9, 2026',
+      related: { label: 'See the talk', href: '#research' },
       shortTitle: 'ICIAH 2026',
       meta: 'Virtual · Sep 9, 2026 · Paper presentation on RabDash DC',
       cover: '/gallery-thumbs/ICIAH_1.webp',
@@ -542,6 +551,7 @@ export const gallery = {
     },
     {
       title: 'DiWA App Caravan',
+      date: 'Jun 15–22, 2026',
       meta: 'Davao Region · Jun 15–22, 2026 · Product demonstration',
       cover: '/gallery-thumbs/DiWA_App_Caravan_3.webp',
       photos: [
@@ -573,6 +583,7 @@ export const gallery = {
     },
     {
       title: 'PythonAsia 2026',
+      date: 'Mar 21–23, 2026',
       meta: 'Manila · Mar 21–23, 2026 · Community event',
       cover: '/gallery-thumbs/PythonAsia2026_group.webp',
       photos: [
@@ -592,6 +603,7 @@ export const gallery = {
     },
     {
       title: 'Mindanao Startup Summit',
+      date: 'Sep 2025',
       meta: 'Mindanao · Sep 2025 · Startup ecosystem',
       cover: '/gallery-thumbs/Mindanao_StartUpSummit1.webp',
       photos: [
@@ -611,6 +623,7 @@ export const gallery = {
     },
     {
       title: 'Pycon Davao 2024',
+      date: 'Sep 2024',
       meta: 'Davao · Sep 2024 · Community event',
       cover: '/gallery-thumbs/PyconDavao2024.webp',
       photos: [
@@ -630,6 +643,7 @@ export const gallery = {
     },
     {
       title: 'Thesis defense',
+      date: 'May 2024',
       meta: 'UP Mindanao · May 2024 · Presentation day',
       cover: '/gallery-thumbs/thesis_def1.webp',
       photos: [
@@ -637,13 +651,13 @@ export const gallery = {
           title: 'PRESENTATION',
           meta: 'Thesis defense',
           src: '/thesis_def1.webp',
-          alt: 'Thesis defense photo',
+          alt: 'Thesis defense photo with panelists part 2',
         },
         {
           title: 'PRESENTATION',
           meta: 'Thesis defense',
           src: '/thesis_def2.webp',
-          alt: 'Second thesis defense photo',
+          alt: 'Thesis defense photo with panelists part 2',
         },
       ],
     },

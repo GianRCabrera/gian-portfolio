@@ -12,7 +12,7 @@ Personal portfolio of **Gian Cabrera**, a software developer and researcher at t
 - **Experience & capabilities:** roles at the DiWA Center and UP Mindanao
 - **Research & talks:** paper presentations and project pitches
 - **Recommendations:** notes from colleagues and classmates
-- **Gallery:** conferences, demos, and milestones, with a thumbnail strip to jump between events
+- **Gallery:** conferences, demos, and milestones as a grid of event cards; each opens a full-screen photo viewer
 - **Contact:** email, Calendly, resume, LinkedIn, and GitHub
 
 Also included: light and dark mode, reduced-motion support, and social link previews (Open Graph).
@@ -60,11 +60,13 @@ Almost everything on the site is driven by [`src/data/portfolio.js`](src/data/po
 ```js
 {
   title: 'Event name 2026',
-  shortTitle: 'Event 2026',                 // optional: label under the thumbnail
-  meta: 'Venue · Oct 1, 2026 · Your role',
-  cover: '/gallery-thumbs/Event_1.webp',    // optional: 320px thumbnail
+  shortTitle: 'Event 2026',                 // optional: label on the card
+  date: 'Oct 1, 2026',                      // shown on the card; its year is the card's year tag
+  meta: 'Venue · Oct 1, 2026 · Your role',  // shown in the viewer
+  cover: '/gallery-thumbs/Event_1.webp',    // optional: 640px card image
+  related: { label: 'See the talk', href: '#research' }, // optional link
   photos: [
-    { title: 'DEMO', meta: 'Event name 2026', src: '/Event_1.webp', alt: 'Describe the photo' },
+    { title: 'DEMO', meta: 'Event name 2026', src: '/Event_1.webp', alt: 'Describe the photo (shown as its caption)' },
   ],
 }
 ```
@@ -73,7 +75,7 @@ Convert photos to WebP before adding them to `public/` (requires `cwebp`, e.g. `
 
 ```bash
 cwebp -q 80 -resize 1600 0 Event_1.jpeg -o public/Event_1.webp                  # landscape; use -resize 0 1600 for portrait
-cwebp -q 78 -resize 320 0 public/Event_1.webp -o public/gallery-thumbs/Event_1.webp
+cwebp -q 76 -resize 640 0 public/Event_1.webp -o public/gallery-thumbs/Event_1.webp
 ```
 
 **Add a case study page:** add its content to `caseStudies` in `portfolio.js`, copy `rabdash-dc-mobile/index.html` to a new folder named after the slug (update the title, meta tags, and `data-case-study`), add it to `build.rollupOptions.input` in `vite.config.js`, and set the project's `caseStudyUrl` to `/<slug>/`.

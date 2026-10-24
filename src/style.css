@@ -1,6 +1,12 @@
 @import "tailwindcss";
 
 @layer base {
+  /* In the base layer so link color/underline utilities still apply. */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
   :where(a, button, [role='button'], [tabindex]):focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
@@ -122,10 +128,6 @@ body::before {
     linear-gradient(90deg, rgba(216, 229, 223, 0.03) 1px, transparent 1px);
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
 
 img {
   display: block;

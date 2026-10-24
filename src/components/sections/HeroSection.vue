@@ -112,7 +112,7 @@ onBeforeUnmount(() => {
       <!-- Availability pill — sits below stats -->
       <div class="mt-2 grid gap-2">
         <div
-          class="flex items-center justify-between rounded-[1.2rem] border border-[var(--line)] bg-[var(--surface-panel-soft)] px-4 py-2.5"
+          class="flex items-center justify-between rounded-[1.2rem] sm:hidden border border-[var(--line)] bg-[var(--surface-panel-soft)] px-4 py-2.5"
         >
           <div class="flex items-center gap-2">
             <span
@@ -181,12 +181,12 @@ onBeforeUnmount(() => {
           <div class="flex w-full items-center gap-4">
             <figure
               v-if="!isDesktop"
-              class="relative h-24 w-[4.5rem] flex-none overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--surface-panel-strong)] shadow-[0_12px_28px_rgba(36,26,18,0.12)]"
+              class="relative h-24 w-[4.5rem] flex-none overflow-hidden rounded-2xl sm:h-36 sm:w-28 border border-[var(--line)] bg-[var(--surface-panel-strong)] shadow-[0_12px_28px_rgba(36,26,18,0.12)]"
             >
               <img
                 :src="profile.photo.fallbackSrc || profile.photo.src"
                 :srcset="profile.photo.srcSet || undefined"
-                sizes="72px"
+                sizes="(min-width: 640px) 112px, 72px"
                 :alt="profile.photo.alt"
                 class="h-full w-full object-cover object-[center_8%]"
                 loading="eager"
@@ -275,19 +275,19 @@ onBeforeUnmount(() => {
               'bg-[var(--line)]': !['Now', 'Stack', 'Domain'].includes(item.label),
             }"
           />
-          <p class="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">
+          <p class="flex items-center justify-between text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">
             {{ item.label }}
+            <span
+              v-if="item.label === 'Stack'"
+              class="inline-flex items-center gap-1 tracking-[0.14em] transition group-hover:translate-y-0.5"
+            >
+              All skills
+              <span aria-hidden="true">↓</span>
+            </span>
           </p>
           <p class="mt-1 text-sm leading-6 text-[var(--ink-strong)]">
             {{ item.value }}<br />
             <span v-if="item.detail" class="text-[var(--ink-muted)]">{{ item.detail }}</span>
-            <span
-              v-if="item.label === 'Stack'"
-              class="mt-2 flex w-fit items-center gap-1 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[var(--accent)]"
-            >
-              See all skills
-              <span aria-hidden="true">↓</span>
-            </span>
           </p>
         </component>
         </div>
