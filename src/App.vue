@@ -127,6 +127,13 @@ watch(theme, (value) => {
       <div class="absolute right-0 top-36 h-72 w-72 rounded-full bg-[rgba(186,111,77,0.12)] blur-3xl" />
     </div>
 
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-[var(--accent)] focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"
+    >
+      Skip to content
+    </a>
+
     <SiteHeader
       :navigation="navigation"
       :profile="profile"
@@ -136,7 +143,7 @@ watch(theme, (value) => {
       @toggle-theme="toggleTheme"
     />
 
-    <main class="mx-auto flex max-w-6xl flex-col gap-6 px-4 pb-8 pt-24 sm:px-6 sm:pt-28 lg:px-10 lg:pt-32">
+    <main id="main" tabindex="-1" class="mx-auto flex max-w-6xl flex-col gap-6 px-4 pb-8 pt-24 sm:px-6 sm:pt-28 lg:px-10 lg:pt-32">
       <HeroSection :profile="profile" />
 
       <ProjectsSection :projects="projects" />

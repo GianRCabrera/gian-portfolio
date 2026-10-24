@@ -18,16 +18,6 @@ export const profile = {
   title: 'Gian Cabrera — Software Developer · Researcher',
   /** Line 1: your name (gradient). Line 2: primary role. Roles pipe is heroRolesLine below. */
   heroTitleLines: ['Gian Cabrera', 'Software Developer · Researcher'],
-  /**
-   * Full tech stack for the “See all tech” modal.
-   * Populate/adjust freely to match your LinkedIn Skills list.
-   */
-  techStack: {
-    frontend: ['Vue 3', 'Vite', 'Tailwind CSS', 'Chart.js', 'JavaScript', 'React / React Native', 'HTML', 'CSS'],
-    backend: ['Node.js', 'Express', 'REST APIs', 'JWT auth', 'PHP / Laravel'],
-    data: ['MySQL', 'MongoDB', 'Power BI', 'Excel / CSV processing'],
-    tools: ['Git', 'GitHub', 'Postman', 'VS Code', 'Cursor', 'Vercel', 'Hostinger', 'XAMPP'],
-  },
   photo: {
     src: '/DP_PORTFOLIO-800.webp',
     fallbackSrc: '/DP_PORTFOLIO-800.webp',
@@ -96,7 +86,6 @@ export const projects = [
     context: 'Android app for rabies vaccination case reporting in Davao City — started as my thesis, now leading its full-stack build.',
     scope: 'Rabies case reporting',
     surface: 'Field submission workflow',
-    summary: 'Mobile reporting application platform for seamless reporting of rabies vaccination and cases for both City Veterinarians Office (CVO) and private veterinarians in Davao City.',
     contribution: 'Full stack work across mobile UI, auth, and submission flows.',
     impact: 'Faster field submissions and cleaner records.',
     spotlight: {
@@ -104,7 +93,6 @@ export const projects = [
       role: 'Full stack: UI, auth, and submission workflow.',
       constraints: 'Android-only · requires internet connection.',
     },
-    resultLabel: 'Field-ready rabies reporting',
     stack: ['React Native', 'Express.js', 'Node.js', 'MySQL', 'Public Health Analytics'],
     featured: true,
     primary: true,
@@ -167,11 +155,9 @@ export const projects = [
     context: 'Workshop website for schedule, applications, and attendee access.',
     scope: 'Programme and applications',
     surface: 'Conference information hub',
-    summary: 'Centralized workshop info and links.',
     contribution: 'Information architecture and page structure.',
     impact: 'Reduced back-and-forth for attendees.',
     impactLead: 'Single hub for schedules and applications',
-    resultLabel: 'Workshop information in one place',
     previewAccent: 'form',
     stackGroups: {
       tech: ['Google Sites'],
@@ -197,11 +183,9 @@ export const projects = [
     context: 'Trend dashboards and templated reporting in one workflow.',
     scope: 'Trend review and report generation',
     surface: 'Hybrid workflow module',
-    summary: 'Dashboard + reporting workflow in one module.',
     contribution: 'UI, workflow logic, and module integration.',
     impact: 'Faster trend review and report prep.',
     impactLead: 'Faster trend review and report prep',
-    resultLabel: 'Hybrid reporting in one workflow',
     previewAccent: 'chart',
     stackGroups: {
       tech: ['Vue 3', 'Templates', 'AI-assisted drafting', 'Backend logic'],
@@ -227,11 +211,9 @@ export const projects = [
     context: 'Live dashboard chart updates and visual maintenance.',
     scope: 'Live chart updates',
     surface: 'Dashboard visual upkeep',
-    summary: 'Kept charts current and readable.',
     contribution: 'Chart UI updates and refinements.',
     impact: 'Consistent visuals as data changes.',
     impactLead: 'Charts stay current as data evolves',
-    resultLabel: 'Ongoing chart updates for a live dashboard',
     previewAccent: 'chart',
     chartVariant: 'bars',
     stackGroups: {
@@ -313,11 +295,15 @@ export const experience = [
 export const skills = [
   {
     title: 'Frontend and UI',
-    items: ['Vue 3', 'JavaScript', 'Tailwind CSS', 'React Native'],
+    items: ['Vue 3', 'JavaScript', 'Tailwind CSS', 'React / React Native', 'Vite', 'Chart.js', 'HTML', 'CSS'],
   },
   {
     title: 'Backend and data',
-    items: ['Node.js', 'Express', 'MySQL', 'MongoDB', 'Power BI'],
+    items: ['Node.js', 'Express', 'REST APIs', 'JWT auth', 'PHP / Laravel', 'MySQL', 'MongoDB', 'Power BI', 'Excel / CSV processing'],
+  },
+  {
+    title: 'Tools',
+    items: ['Git', 'GitHub', 'Postman', 'VS Code', 'Cursor', 'Vercel', 'Hostinger', 'XAMPP'],
   },
   {
     title: 'Domain and product thinking',

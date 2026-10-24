@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+@layer base {
+  :where(a, button, [role='button'], [tabindex]):focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
 :root {
   --page: #f4efe7;
   --surface: #fff9f1;

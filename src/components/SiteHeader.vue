@@ -94,14 +94,14 @@ onBeforeUnmount(() => {
         </a>
       </div>
 
-      <nav class="hidden w-full overflow-x-auto pb-1 [-webkit-overflow-scrolling:touch] md:block md:w-auto md:flex-1 md:overflow-visible md:pb-0">
-        <div class="flex min-w-max items-center gap-1.5 text-sm text-[var(--ink-soft)] md:min-w-0 md:justify-center md:gap-2">
+      <nav class="hidden min-[1100px]:block min-[1100px]:flex-1">
+        <div class="flex items-center justify-center gap-0.5 text-sm text-[var(--ink-soft)] xl:gap-2">
           <a
             v-for="item in navigation"
             :key="item.href"
             :href="item.href"
             :class="[
-              'rounded-full px-4 py-2 transition hover:bg-[var(--surface-raised)] hover:text-[var(--ink-strong)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]',
+              'rounded-full px-3 py-2 transition hover:bg-[var(--surface-raised)] xl:px-4 hover:text-[var(--ink-strong)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]',
               activeSection === item.href.replace('#', '')
                 ? 'font-semibold text-[var(--ink-strong)] ring-1 ring-[var(--accent)]/45 bg-[color-mix(in_oklab,var(--accent)_18%,var(--surface-raised))] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]'
                 : 'text-[var(--ink-soft)]',
@@ -113,9 +113,23 @@ onBeforeUnmount(() => {
       </nav>
 
       <div class="flex items-center justify-end gap-2 sm:gap-3 md:flex-none">
+        <a
+          v-if="profile.resumeUrl"
+          :href="profile.resumeUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-primary inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:text-sm min-[1100px]:px-4 min-[1100px]:py-2.5"
+        >
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <path d="M7 10l5 5 5-5" />
+            <path d="M12 15V3" />
+          </svg>
+          Resume
+        </a>
         <button
           type="button"
-          class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface-raised)] text-[var(--ink-strong)] transition hover:-translate-y-0.5 hover:border-[var(--line-strong)] hover:bg-[var(--surface)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:h-11 sm:w-11 md:hidden"
+          class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface-raised)] text-[var(--ink-strong)] transition hover:-translate-y-0.5 hover:border-[var(--line-strong)] hover:bg-[var(--surface)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:h-11 sm:w-11 min-[1100px]:hidden"
           aria-label="Open menu"
           @click="openMobileMenu"
         >
@@ -130,7 +144,7 @@ onBeforeUnmount(() => {
           :aria-label="themeLabel"
           :title="themeLabel"
           @click="$emit('toggle-theme')"
-          class="hidden h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface-raised)] text-[var(--ink-strong)] transition hover:-translate-y-0.5 hover:border-[var(--line-strong)] hover:bg-[var(--surface)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:h-11 sm:w-11 md:inline-flex"
+          class="hidden h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface-raised)] text-[var(--ink-strong)] transition hover:-translate-y-0.5 hover:border-[var(--line-strong)] hover:bg-[var(--surface)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:h-11 sm:w-11 min-[1100px]:inline-flex"
         >
           <svg
             v-if="theme === 'dark'"
@@ -167,7 +181,7 @@ onBeforeUnmount(() => {
     <Teleport to="body">
       <div
         v-if="isMobileMenuOpen"
-        class="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm md:hidden"
+        class="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm min-[1100px]:hidden"
         role="dialog"
         aria-modal="true"
         aria-label="Site menu"
@@ -207,6 +221,15 @@ onBeforeUnmount(() => {
           </nav>
 
           <div class="flex flex-col gap-2 border-t border-[var(--line)] p-4">
+            <a
+              :href="scheduleCallHref"
+              :target="scheduleCallHref.startsWith('http') ? '_blank' : undefined"
+              :rel="scheduleCallHref.startsWith('http') ? 'noopener noreferrer' : undefined"
+              class="btn-primary inline-flex items-center justify-center rounded-full px-4 py-3 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+              @click="closeMobileMenu"
+            >
+              Book a 30-min call
+            </a>
             <button
               type="button"
               class="inline-flex items-center justify-center rounded-full border border-[var(--line-strong)] px-4 py-3 text-sm font-medium transition hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"

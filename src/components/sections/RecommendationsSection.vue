@@ -65,7 +65,7 @@ const markAvatarFailed = (item) => {
           Recommendations
         </p>
         <h2 class="mt-3 text-3xl leading-tight font-semibold tracking-[-0.03em] text-[var(--ink-strong)] sm:text-4xl">
-          Endorsements from collaborators and mentors.
+          In their words.
         </h2>
         <p class="mt-3 max-w-xl text-base leading-relaxed text-[var(--ink-soft)]">
           {{ meta.intro || 'Short notes from people I’ve worked with.' }}

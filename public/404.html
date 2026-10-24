@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Page not found · Gian Cabrera</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:wght@600&display=swap" rel="stylesheet" />
+    <!-- Same saved theme as the main site (key: portfolio-theme). -->
+    <script>
+      try {
+        var saved = localStorage.getItem('portfolio-theme')
+        var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light'
+      } catch (e) {}
+    </script>
+    <style>
+      :root {
+        --page: #f4efe7;
+        --surface: #fff9f1;
+        --ink-strong: #163730;
+        --ink-soft: #274843;
+        --ink-muted: #4f5f59;
+        --line: rgba(28, 56, 50, 0.16);
+        --accent: #1b6e61;
+        --button-text: #ffffff;
+      }
+      :root[data-theme='dark'] {
+        --page: #111614;
+        --surface: #16201d;
+        --ink-strong: #eef5f1;
+        --ink-soft: #d8e5df;
+        --ink-muted: #a8bdb6;
+        --line: rgba(200, 224, 214, 0.12);
+        --accent: #6fd2bb;
+        --button-text: #10201c;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px 16px;
+        background: var(--page);
+        color: var(--ink-soft);
+        font-family: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
+      }
+      main {
+        width: 100%;
+        max-width: 32rem;
+        padding: 40px 32px;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: var(--surface);
+        text-align: center;
+        box-shadow: 0 22px 60px rgba(21, 38, 35, 0.12);
+      }
+      .code {
+        margin: 0;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+      h1 {
+        margin: 12px 0 0;
+        font-family: Lora, Georgia, serif;
+        font-size: clamp(1.8rem, 6vw, 2.4rem);
+        line-height: 1.15;
+        color: var(--ink-strong);
+      }
+      p {
+        margin: 12px 0 0;
+        line-height: 1.6;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 28px;
+      }
+      a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        padding: 12px 22px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-decoration: none;
+      }
+      a:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+      .primary {
+        background: var(--accent);
+        color: var(--button-text);
+      }
+      .secondary {
+        border: 1px solid var(--line);
+        color: var(--ink-strong);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="code">404 · Page not found</p>
+      <h1>This page doesn’t exist.</h1>
+      <p>The link may be old or mistyped. Everything is still on the main portfolio.</p>
+      <div class="actions">
+        <a class="primary" href="/">Back to portfolio</a>
+        <a class="secondary" href="/#projects">See projects</a>
+      </div>
+    </main>
+  </body>
+</html>

@@ -221,6 +221,12 @@ const groupKey = (group) =>
                     <p class="pt-2 text-sm leading-relaxed text-[var(--ink-muted)]">
                       {{ role.summary }}
                     </p>
+                    <ul v-if="role.highlights?.length" class="mt-3 space-y-2 text-sm text-[var(--ink-soft)]">
+                      <li v-for="highlight in role.highlights" :key="highlight" class="flex gap-3 leading-snug">
+                        <span class="mt-1.5 h-1.5 w-1.5 flex-none rounded-full bg-[var(--accent)]" />
+                        <span>{{ highlight }}</span>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </article>
@@ -301,7 +307,8 @@ const groupKey = (group) =>
       </header>
 
       <aside
-        class="capabilities-shell rounded-[2rem] border border-[var(--line-strong)] bg-[var(--surface-panel-strong)] p-6 text-[var(--ink-strong)] shadow-[0_22px_52px_rgba(21,38,35,0.18)] sm:p-8 xl:sticky xl:top-28 xl:self-start"
+        id="capabilities"
+        class="capabilities-shell scroll-mt-28 rounded-[2rem] border border-[var(--line-strong)] bg-[var(--surface-panel-strong)] p-6 text-[var(--ink-strong)] shadow-[0_22px_52px_rgba(21,38,35,0.18)] sm:p-8 xl:sticky xl:top-28 xl:self-start"
         aria-label="Capabilities and skills"
       >
         <div class="space-y-6">

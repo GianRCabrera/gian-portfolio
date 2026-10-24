@@ -263,7 +263,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
           <p class="text-[1.05rem] font-semibold leading-snug text-[var(--ink-strong)] sm:text-lg">
             {{ currentEvent?.title || current?.title }}
           </p>
-          <p v-if="currentEvent?.meta || current?.meta" class="text-sm leading-6 text-[var(--ink-muted)]/90">
+          <p v-if="currentEvent?.meta || current?.meta" class="text-sm leading-6 text-[var(--ink-muted)]">
             {{ currentEvent?.meta || current?.meta }}
           </p>
           <div class="pt-1">

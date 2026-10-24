@@ -167,13 +167,13 @@ onUnmounted(() => {
     <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
       <div class="max-w-3xl space-y-3">
         <p class="section-label text-sm font-semibold uppercase tracking-[0.28em] text-[var(--accent)]">
-          Work
+          Projects
         </p>
         <h2 class="text-3xl leading-tight font-semibold tracking-[-0.03em] text-[var(--ink-strong)] sm:text-4xl">
-          Projects.
+          Selected work.
         </h2>
         <p class="max-w-2xl text-base leading-relaxed text-[var(--ink-soft)]">
-          Selected work across real reporting workflows, data-heavy interfaces, and product features that hold up in production.
+          Real reporting workflows, data-heavy interfaces, and product features that hold up in production.
         </p>
       </div>
     </div>
@@ -203,9 +203,6 @@ onUnmounted(() => {
           </p>
           <p class="text-base leading-7 text-[var(--ink-soft)]">
             {{ primaryProject.context }}
-          </p>
-          <p class="text-sm font-medium uppercase tracking-[0.2em] text-[var(--accent)]">
-            {{ primaryProject.resultLabel }}
           </p>
         </div>
 
@@ -330,13 +327,10 @@ onUnmounted(() => {
 
       <div class="flex h-full flex-col rounded-[1.5rem] border border-[var(--line)] bg-[var(--surface-panel-soft)] p-5 text-[var(--ink-strong)]">
         <p class="text-label text-[var(--accent)]">
-          Project overview
-        </p>
-        <p class="mt-3 text-base leading-7 text-[var(--ink-soft)]">
-          {{ primaryProject.summary }}
+          Key facts
         </p>
 
-        <dl v-if="spotlightItems.length" class="mt-5 grid gap-4 rounded-[1.2rem] border border-[var(--line)] bg-[var(--surface-panel)] p-4">
+        <dl v-if="spotlightItems.length" class="mt-4 grid gap-4 rounded-[1.2rem] border border-[var(--line)] bg-[var(--surface-panel)] p-4">
           <div
             v-for="(item, index) in spotlightItems"
             :key="item.label"
@@ -722,7 +716,7 @@ onUnmounted(() => {
 
           <div class="flex flex-1 flex-col gap-2.5 p-6">
             <div class="space-y-1.5">
-              <p class="text-[0.7rem] font-medium uppercase tracking-[0.18em] text-[var(--ink-muted)]/85">
+              <p class="text-[0.7rem] font-medium uppercase tracking-[0.18em] text-[var(--ink-muted)]">
                 {{ project.role }}
               </p>
               <h3 class="text-2xl leading-tight font-semibold tracking-[-0.02em] text-[var(--ink-strong)]">

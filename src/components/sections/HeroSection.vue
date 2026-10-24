@@ -1,5 +1,5 @@
 <script setup>
-import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, ref } from 'vue'
 import { useScrollReveal } from '../../composables/useScrollReveal'
 
 const props = defineProps({
@@ -19,8 +19,6 @@ const onDesktopChange = (event) => {
 }
 desktopQuery?.addEventListener('change', onDesktopChange)
 
-const isTechModalOpen = ref(false)
-const techModalEl = ref(null)
 
 const scheduleCallHref = computed(() => {
   const schedulingUrl = props.profile?.scheduleCallUrl
@@ -35,31 +33,8 @@ const scheduleCallHref = computed(() => {
   return `${href}${prefix}subject=${subject}&body=${body}`
 })
 
-function openTechModal() {
-  isTechModalOpen.value = true
-}
-
-function closeTechModal() {
-  isTechModalOpen.value = false
-}
-
-function onTechModalKeyDown(event) {
-  if (event.key === 'Escape') closeTechModal()
-}
-
-watch(isTechModalOpen, async (isOpen) => {
-  if (typeof document === 'undefined') return
-  document.documentElement.style.overflow = isOpen ? 'hidden' : ''
-  if (isOpen) {
-    await nextTick()
-    techModalEl.value?.focus?.()
-  }
-})
-
 onBeforeUnmount(() => {
   desktopQuery?.removeEventListener('change', onDesktopChange)
-  if (typeof document === 'undefined') return
-  document.documentElement.style.overflow = ''
 })
 </script>
 
@@ -282,18 +257,13 @@ onBeforeUnmount(() => {
         <p class="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[var(--ink-muted)]">At a glance</p>
 
         <div class="mt-2 grid w-full grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-3">
-        <div
+        <component
+          :is="item.label === 'Stack' ? 'a' : 'div'"
           v-for="item in profile.heroHighlights"
           :key="item.label"
-          class="group relative min-w-0 overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--surface-panel-soft)]/80 px-4 py-3 transition hover:-translate-y-0.5 hover:border-[var(--accent)]/35 sm:rounded-[1rem]"
-          :class="{
-            'cursor-pointer': item.label === 'Stack' && profile.techStack,
-          }"
-          role="button"
-          tabindex="0"
-          @click="item.label === 'Stack' && profile.techStack ? openTechModal() : null"
-          @keydown.enter.prevent="item.label === 'Stack' && profile.techStack ? openTechModal() : null"
-          @keydown.space.prevent="item.label === 'Stack' && profile.techStack ? openTechModal() : null"
+          :href="item.label === 'Stack' ? '#capabilities' : undefined"
+          class="group relative block min-w-0 overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--surface-panel-soft)]/80 px-4 py-3 transition sm:rounded-[1rem]"
+          :class="item.label === 'Stack' ? 'hover:-translate-y-0.5 hover:border-[var(--accent)]/35 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]' : ''"
         >
           <span
             aria-hidden="true"
@@ -305,32 +275,21 @@ onBeforeUnmount(() => {
               'bg-[var(--line)]': !['Now', 'Stack', 'Domain'].includes(item.label),
             }"
           />
-          <p class="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]/90">
+          <p class="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">
             {{ item.label }}
           </p>
-          <p v-if="item.label === 'Now'" class="mt-1 text-sm leading-6 text-[var(--ink-strong)]">
-            {{ item.value }}<br />
-            <span class="text-[var(--ink-muted)]">{{ item.detail }}</span>
-          </p>
-          <p v-else-if="item.label === 'Stack'" class="mt-1 text-sm leading-6 text-[var(--ink-strong)]">
+          <p class="mt-1 text-sm leading-6 text-[var(--ink-strong)]">
             {{ item.value }}<br />
             <span v-if="item.detail" class="text-[var(--ink-muted)]">{{ item.detail }}</span>
             <span
-              v-if="profile.techStack"
+              v-if="item.label === 'Stack'"
               class="mt-2 flex w-fit items-center gap-1 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[var(--accent)]"
             >
-              See all tech
-              <span aria-hidden="true">→</span>
+              See all skills
+              <span aria-hidden="true">↓</span>
             </span>
           </p>
-          <p v-else-if="item.label === 'Domain'" class="mt-1 text-sm leading-6 text-[var(--ink-strong)]">
-            {{ item.value }}<br />
-            <span v-if="item.detail" class="text-[var(--ink-muted)]">{{ item.detail }}</span>
-          </p>
-          <p v-else class="mt-1 text-xs font-medium leading-5 text-[var(--ink-strong)] [overflow-wrap:anywhere]">
-            {{ item.value }}
-          </p>
-        </div>
+        </component>
         </div>
       </div>
 
@@ -396,128 +355,5 @@ onBeforeUnmount(() => {
       </div>
     </div>
 
-    <teleport to="body">
-      <div
-        v-if="isTechModalOpen"
-        class="fixed inset-0 z-[100] flex items-center justify-center px-4 py-6 sm:px-6"
-        @keydown="onTechModalKeyDown"
-      >
-        <button
-          type="button"
-          class="absolute inset-0 bg-black/40"
-          aria-label="Close tech stack dialog"
-          @click="closeTechModal"
-        />
-
-        <div
-          ref="techModalEl"
-          class="relative z-[101] w-full max-w-2xl overflow-hidden rounded-2xl border border-[var(--line-strong)] bg-[var(--surface)] shadow-[0_30px_80px_rgba(0,0,0,0.25)] focus:outline-none"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Tech stack"
-          tabindex="-1"
-        >
-          <div class="flex items-center justify-between gap-4 border-b border-[var(--line)] px-5 py-3.5 sm:px-6">
-            <div class="min-w-0">
-              <h3 class="text-lg font-semibold leading-none text-[var(--ink-strong)] sm:text-xl">
-                <span class="gradient-text">Tech Stack</span>
-              </h3>
-            </div>
-            <button
-              type="button"
-              class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface-panel-soft)] text-[var(--ink-strong)] transition hover:border-[var(--accent)]/35"
-              aria-label="Close"
-              @click="closeTechModal"
-            >
-              ✕
-            </button>
-          </div>
-
-          <div class="max-h-[70vh] overflow-auto px-5 py-4 sm:px-6">
-            <div class="grid gap-5 sm:grid-cols-2">
-              <div v-if="profile.techStack?.frontend?.length" class="min-w-0">
-                <p class="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]/90">Frontend</p>
-                <div class="mt-2 flex flex-wrap gap-2">
-                  <span
-                    v-for="item in profile.techStack.frontend"
-                    :key="`fe-${item}`"
-                    class="rounded-full border border-[var(--line)] bg-[var(--surface-panel-soft)] px-3 py-1 text-xs font-medium text-[var(--ink-strong)]"
-                  >
-                    {{ item }}
-                  </span>
-                </div>
-              </div>
-
-              <div v-if="profile.techStack?.backend?.length" class="min-w-0">
-                <p class="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]/90">Backend</p>
-                <div class="mt-2 flex flex-wrap gap-2">
-                  <span
-                    v-for="item in profile.techStack.backend"
-                    :key="`be-${item}`"
-                    class="rounded-full border border-[var(--line)] bg-[var(--surface-panel-soft)] px-3 py-1 text-xs font-medium text-[var(--ink-strong)]"
-                  >
-                    {{ item }}
-                  </span>
-                </div>
-              </div>
-
-              <div v-if="profile.techStack?.data?.length" class="min-w-0">
-                <p class="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]/90">Data</p>
-                <div class="mt-2 flex flex-wrap gap-2">
-                  <span
-                    v-for="item in profile.techStack.data"
-                    :key="`data-${item}`"
-                    class="rounded-full border border-[var(--line)] bg-[var(--surface-panel-soft)] px-3 py-1 text-xs font-medium text-[var(--ink-strong)]"
-                  >
-                    {{ item }}
-                  </span>
-                </div>
-              </div>
-
-              <div v-if="profile.techStack?.mapping?.length" class="min-w-0">
-                <p class="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]/90">Geospatial</p>
-                <div class="mt-2 flex flex-wrap gap-2">
-                  <span
-                    v-for="item in profile.techStack.mapping"
-                    :key="`map-${item}`"
-                    class="rounded-full border border-[var(--line)] bg-[var(--surface-panel-soft)] px-3 py-1 text-xs font-medium text-[var(--ink-strong)]"
-                  >
-                    {{ item }}
-                  </span>
-                </div>
-              </div>
-
-              <div v-if="profile.techStack?.tools?.length" class="min-w-0 sm:col-span-2">
-                <p class="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]/90">Tools</p>
-                <div class="mt-2 flex flex-wrap gap-2">
-                  <span
-                    v-for="item in profile.techStack.tools"
-                    :key="`tools-${item}`"
-                    class="rounded-full border border-[var(--line)] bg-[var(--surface-panel-soft)] px-3 py-1 text-xs font-medium text-[var(--ink-strong)]"
-                  >
-                    {{ item }}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="border-t border-[var(--line)] px-5 py-4 sm:px-6">
-            <div class="flex flex-wrap items-center justify-between gap-3">
-              <p class="text-xs text-[var(--ink-muted)]">
-                A curated snapshot of the technologies I use across product work.
-              </p>
-              <button
-                type="button"
-                class="inline-flex items-center justify-center rounded-full border border-[var(--line-strong)] px-4 py-2 text-sm font-medium transition hover:border-[var(--accent)] hover:text-[var(--accent)]"
-                @click="closeTechModal"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </teleport>
   </section>
 </template>
