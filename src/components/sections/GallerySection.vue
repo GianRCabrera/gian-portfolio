@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useScrollReveal } from '../../composables/useScrollReveal'
+import { useSwipe } from '../../composables/useSwipe'
 
 const props = defineProps({
   gallery: {
@@ -146,6 +147,12 @@ watch(isLightboxOpen, (open) => {
   document.documentElement.style.overflow = open ? 'hidden' : ''
 })
 
+// Swipe between photos on touch screens, inline and in the full-screen viewer.
+const photoArea = ref(null)
+const lightboxPhotoArea = ref(null)
+useSwipe(photoArea, { onLeft: () => hasMultiplePhotos.value && goNext(), onRight: () => hasMultiplePhotos.value && goPrev() })
+useSwipe(lightboxPhotoArea, { onLeft: () => hasMultiplePhotos.value && goNext(), onRight: () => hasMultiplePhotos.value && goPrev() })
+
 onMounted(() => window.addEventListener('keydown', onKeyDown))
 onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
 </script>
@@ -174,7 +181,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
 
     <div v-if="normalizedEvents.length" class="space-y-3">
       <figure class="mx-auto w-full max-w-2xl overflow-hidden rounded-[1.6rem] border border-[var(--line-strong)] bg-[var(--surface)] shadow-[0_18px_44px_rgba(32,24,16,0.08)] sm:max-w-3xl">
-        <div class="relative aspect-[5/4] w-full overflow-hidden bg-[var(--surface-panel-soft)] sm:aspect-[16/9]">
+        <div ref="photoArea" class="relative aspect-[5/4] w-full overflow-hidden bg-[var(--surface-panel-soft)] sm:aspect-[16/9]">
           <button
             v-if="current?.src"
             type="button"
@@ -390,7 +397,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
             </button>
           </div>
 
-          <div class="relative bg-black/30">
+          <div ref="lightboxPhotoArea" class="relative bg-black/30">
             <div class="grid place-items-center p-3 sm:p-4">
               <img
                 v-if="current?.src"

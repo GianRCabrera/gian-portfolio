@@ -1,6 +1,7 @@
 <script setup>
 import { computed, nextTick, onUnmounted, ref, watch } from 'vue'
 import { useScrollReveal } from '../../composables/useScrollReveal'
+import { useSwipe } from '../../composables/useSwipe'
 import { profile } from '../../data/portfolio'
 
 const props = defineProps({
@@ -60,6 +61,12 @@ const nextSlideIndex = computed(() => {
 
 const prevSlide = computed(() => featuredSlides.value[prevSlideIndex.value] ?? null)
 const nextSlide = computed(() => featuredSlides.value[nextSlideIndex.value] ?? null)
+
+const carouselEl = ref(null)
+useSwipe(carouselEl, {
+  onLeft: () => showCarouselControls.value && goNextSlide(),
+  onRight: () => showCarouselControls.value && goPrevSlide(),
+})
 
 const onCarouselKeydown = (event) => {
   if (!showCarouselControls.value) return
@@ -209,6 +216,7 @@ onUnmounted(() => {
         <figure class="group overflow-hidden rounded-[1.35rem] border border-[var(--line)] bg-[var(--surface-panel-soft)]">
           <div
             v-if="carouselEnabled"
+            ref="carouselEl"
             class="relative overflow-hidden"
             role="region"
             :aria-label="`Preview carousel: ${primaryProject.title}`"

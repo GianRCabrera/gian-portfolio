@@ -201,6 +201,13 @@ section + section.section-shell {
   transition: opacity 0.65s ease, transform 0.65s ease;
 }
 
+/* Revealed by a nav jump: no fade, no staggered entries. */
+.reveal-instant,
+.reveal-instant .exp-entry-wrap {
+  transition: none !important;
+  animation: none !important;
+}
+
 /* Shared hover-card interaction */
 .hover-card {
   transition: transform 0.22s ease, box-shadow 0.22s ease;

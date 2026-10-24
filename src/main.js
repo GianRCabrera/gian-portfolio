@@ -1,4 +1,10 @@
 import { createApp } from 'vue'
+// Self-hosted fonts (same weights the Google Fonts link used to load).
+import '@fontsource/inter/400.css'
+import '@fontsource/inter/500.css'
+import '@fontsource/inter/600.css'
+import '@fontsource/lora/600.css'
+import '@fontsource/lora/600-italic.css'
 import './style.css'
 
 const root = document.querySelector('#app')
