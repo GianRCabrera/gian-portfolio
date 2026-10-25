@@ -83,7 +83,7 @@ onBeforeUnmount(() => {
       class="site-header-bar mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-[1.75rem] border px-4 py-3 md:flex-row md:flex-nowrap md:gap-5 md:px-6"
     >
       <div class="flex min-w-0 flex-1 items-center gap-3 md:flex-none md:flex-initial">
-        <a href="#top" class="flex min-w-0 items-center gap-3">
+        <a href="#top" class="flex min-w-0 items-center gap-2.5 sm:gap-3">
           <span
             class="flex h-10 shrink-0 overflow-hidden rounded-full border bg-[var(--surface-raised)] transition-all duration-300 sm:h-11"
             :class="pastHero ? 'w-10 border-[var(--line)] opacity-100 sm:w-11' : '-mr-3 w-0 border-transparent opacity-0'"
@@ -100,7 +100,7 @@ onBeforeUnmount(() => {
           />
           </span>
           <div class="min-w-0">
-            <p class="truncate text-sm font-semibold tracking-[0.18em] text-[var(--ink-strong)] uppercase">
+            <p class="truncate text-[0.8rem] font-semibold tracking-[0.1em] text-[var(--ink-strong)] uppercase sm:text-sm sm:tracking-[0.18em]">
               {{ profile.name }}
             </p>
             <p class="hidden truncate text-sm text-[var(--ink-muted)] sm:block">
@@ -128,21 +128,22 @@ onBeforeUnmount(() => {
         </div>
       </nav>
 
-      <div class="flex items-center justify-end gap-2 sm:gap-3 md:flex-none">
+      <div class="flex items-center justify-end gap-1.5 sm:gap-3 md:flex-none">
         <a
           v-if="profile.resumeUrl"
           :href="profile.resumeUrl"
           target="_blank"
           rel="noopener noreferrer"
-          class="btn-primary items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:text-sm min-[1100px]:px-4 min-[1100px]:py-2.5"
+          class="btn-primary items-center gap-1.5 rounded-full px-3 py-2 max-[389px]:h-10 max-[389px]:w-10 max-[389px]:justify-center max-[389px]:px-0 sm:px-3.5 text-xs font-semibold shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:text-sm min-[1100px]:px-4 min-[1100px]:py-2.5"
           :class="pastHero ? 'inline-flex' : 'hidden'"
+          aria-label="Download resume (PDF)"
         >
           <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
             <path d="M7 10l5 5 5-5" />
             <path d="M12 15V3" />
           </svg>
-          Resume
+          <span class="max-[389px]:sr-only">Resume</span>
         </a>
         <button
           type="button"
