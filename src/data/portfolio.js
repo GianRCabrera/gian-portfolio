@@ -1,6 +1,6 @@
 /**
- * GitHub: profile/social links use gian-r-cabrera; RabDash Mobile repo is under GianRCabrera (formerly GianSolo-aok).
- * Update its repoUrl once the repo is transferred to gian-r-cabrera.
+ * GitHub: everything lives on the personal account GianRCabrera (gian-r-cabrera is a work account
+ * that will be deactivated — don't link to it).
  */
 export const navigation = [
   { label: 'Projects', href: '#projects' },
@@ -58,7 +58,7 @@ export const profile = {
     },
     {
       label: 'GitHub',
-      url: 'https://github.com/gian-r-cabrera',
+      url: 'https://github.com/GianRCabrera',
     },
   ],
 }
@@ -328,8 +328,8 @@ export const contact = {
     },
     {
       label: 'GitHub',
-      description: 'github.com/gian-r-cabrera',
-      url: 'https://github.com/gian-r-cabrera',
+      description: 'github.com/GianRCabrera',
+      url: 'https://github.com/GianRCabrera',
       icon: 'github',
       ariaLabel: "Open Gian Cabrera's GitHub profile",
     },
