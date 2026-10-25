@@ -96,7 +96,7 @@ const groupKey = (group) =>
           Where I’ve worked.
         </h2>
         <p class="max-w-2xl text-base leading-relaxed text-[var(--ink-soft)]">
-          Roles and milestones where I shipped UI, reporting workflows, and data-heavy features — from internships to production work.
+          Roles where I built and maintained public health systems, from student research to production.
         </p>
       </header>
 

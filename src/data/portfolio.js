@@ -13,10 +13,7 @@ export const navigation = [
 
 export const profile = {
   name: 'Gian Cabrera',
-  shortName: 'GC',
-  /** Page / SEO-friendly title; hero uses heroTitleLines + heroRolesLine. */
-  title: 'Gian Cabrera — Software Developer · Researcher',
-  /** Line 1: your name (gradient). Line 2: primary role. Roles pipe is heroRolesLine below. */
+  /** Line 1: your name (gradient). Line 2: primary role. */
   heroTitleLines: ['Gian Cabrera', 'Software Developer · Researcher'],
   photo: {
     src: '/DP_PORTFOLIO-800.webp',
@@ -25,24 +22,14 @@ export const profile = {
       '/DP_PORTFOLIO-160.webp 160w, /DP_PORTFOLIO-533.webp 533w, /DP_PORTFOLIO-800.webp 800w, /DP_PORTFOLIO-1066.webp 1066w',
     sizes: '(max-width: 640px) 280px, (max-width: 1024px) 248px, 272px',
     alt: 'Portrait of Gian Cabrera',
-    caption: 'Software Developer · DiWA Center',
-    /** Small kicker on portrait overlay. */
-    overlayKicker: 'Software · 3D · research',
-    /** Hide duplicate name on photo when H1 is already the name. */
-    hideName: true,
   },
   /** Hero lead copy (short paragraphs, top-to-bottom). */
   introParagraphs: [
     'Junior Programmer at the DiWA Center (UP Mindanao), where I lead RabDash DC: the rabies data system that replaced the Davao City Veterinarian’s Office’s paper forms. I build dashboards and decision-support tools for disease surveillance and public health.',
   ],
-  /** Short chips under the lead (three items; highlights carry NOW/DOMAIN/STACK). */
-  heroFocusAreas: [],
   location: 'Davao City, Philippines',
   /** Shown on Contact; header keeps full `location`. */
   timezone: 'PHT',
-  currentRole: 'Junior Programmer at the Mindanao Center for Disease Watch and Analytics',
-  availability: 'Open to software engineering, analytics, and dashboard-focused roles.',
-  education: 'BS Computer Science, UP Mindanao',
   heroHighlights: [
     {
       label: 'Now',
@@ -82,10 +69,7 @@ export const projects = [
     slug: 'rabdash-dc-mobile-application',
     typeLabel: 'Mobile App',
     role: 'Full Stack · Lead Developer',
-    audience: 'City Veterinary Office (CVO) + private veterinarians in Davao City',
     context: 'Android app for rabies vaccination case reporting in Davao City — started as my thesis, now leading its full-stack build.',
-    scope: 'Rabies case reporting',
-    surface: 'Field submission workflow',
     contribution: 'Full stack work across mobile UI, auth, and submission flows.',
     impact: 'Faster field submissions and cleaner records.',
     spotlight: {
@@ -93,7 +77,7 @@ export const projects = [
       role: 'Full stack: UI, auth, and submission workflow.',
       constraints: 'Android-only · requires internet connection.',
     },
-    stack: ['React Native', 'Express.js', 'Node.js', 'MySQL', 'Public Health Analytics'],
+    stack: ['React Native', 'Express.js', 'Node.js', 'MySQL'],
     featured: true,
     primary: true,
     featuredImage: '/login.webp',
@@ -150,11 +134,8 @@ export const projects = [
     title: 'IWOMB 2025 Website',
     slug: 'iwomb-2025-website',
     typeLabel: 'Event Website',
-    role: 'Full Stack · Website Build',
-    audience: 'Workshop attendees and organizers',
+    role: 'Website build · Information architecture',
     context: 'Workshop website for schedule, applications, and attendee access.',
-    scope: 'Programme and applications',
-    surface: 'Conference information hub',
     contribution: 'Information architecture and page structure.',
     impact: 'Reduced back-and-forth for attendees.',
     impactLead: 'Single hub for schedules and applications',
@@ -177,12 +158,9 @@ export const projects = [
   {
     title: 'DiWA Disease Trends Dashboard',
     slug: 'infectious-disease-trends-dashboard',
-    typeLabel: 'Dashboard ·AI reporting system',
+    typeLabel: 'Dashboard · AI reporting system',
     role: 'Dashboard · AI reporting system',
-    audience: 'Public health reporting teams',
     context: 'Trend dashboards and templated reporting in one workflow.',
-    scope: 'Trend review and report generation',
-    surface: 'Hybrid workflow module',
     contribution: 'UI, workflow logic, and module integration.',
     impact: 'Faster trend review and report prep.',
     impactLead: 'Faster trend review and report prep',
@@ -207,10 +185,7 @@ export const projects = [
     slug: 'rabdash-dc-chart-maintenance',
     typeLabel: 'Chart Maintenance',
     role: 'Frontend · Chart Updates',
-    audience: 'Research and surveillance users',
     context: 'Live dashboard chart updates and visual maintenance.',
-    scope: 'Live chart updates',
-    surface: 'Dashboard visual upkeep',
     contribution: 'Chart UI updates and refinements.',
     impact: 'Consistent visuals as data changes.',
     impactLead: 'Charts stay current as data evolves',
@@ -243,7 +218,7 @@ export const experience = [
     logoSrc: '/DiWA_Logo.webp',
     logoAlt: 'DiWA logo',
     summary:
-      'Lead the design, development, implementation, and continuing improvement of RabDash, aligning technical work with Center and partner requirements.',
+      'Lead RabDash DC: maintaining and improving its web system for the City Veterinarian’s Office, and building its full-stack mobile app, in line with Center and partner requirements.',
     highlights: [
       'Building the full-stack RabDash DC Mobile App (React Native, Express, Node.js, MySQL).',
       'Technical point of contact for RabDash updates, demos, and stakeholder concerns.',
@@ -315,24 +290,12 @@ export const skills = [
   },
 ]
 
-export const about = {
-  sectionLabel: 'About',
-  title: 'I build product UI for complex workflows.',
-  paragraphs: [
-    'Clear screens, faster decisions.',
-  ],
-  differentiators: [
-    'Workflow-first UI',
-    'Data-heavy UX',
-    'Clarity under pressure',
-  ],
-}
 
 export const contact = {
   title: "Let's build products people actually use.",
-  intro: 'Open to frontend and product-focused roles in analytics, dashboards, and workflow systems.',
+  intro: 'Open to software engineering roles — full-stack, dashboards, and public health tech.',
   availabilityBadge: 'Open to roles',
-  availability: 'Best fit: product UI, data-heavy screens, and workflow tools.',
+  availability: 'Best fit: data-heavy products, dashboards, and systems that support real decisions.',
   links: [
     {
       label: 'Email',
@@ -701,7 +664,7 @@ export const recommendations = [
       'I’ve known Gian since our college years, and his professional growth has been impressive. He is remarkably resilient; he approaches complex challenges with a persistent, solution-oriented mindset and a refusal to give up until the job is done. This tenacity is matched by his natural ability to collaborate. Even during intense academic or personal projects, Gian maintained his composure and stayed focused, often acting as a steadying influence on the group. With his dual expertise in software and hardware development, Gian is a versatile asset to any team. He is a high-caliber professional who elevates the work of those around him, and I recommend him to any organization looking for someone dedicated and technically skilled.',
     name: 'Harold Clyde Valiente',
     role: 'Computer Programmer @ UP Mindanao',
-    relationship: 'UP Mindanao · colleague',
+    relationship: 'Colleague · UP Mindanao',
     sourceDate: 'Jun 2026',
     sourceLabel: 'Recommendation',
     avatarUrl: '/recommendations/harold-clyde-valiente-192.jpg',
@@ -714,7 +677,7 @@ export const recommendations = [
       'I’ve known Gian as both a classmate and roommate at UP Mindanao. He consistently delivers quality work, learns new technologies quickly, and approaches every task with professionalism and integrity. Gian is dependable, adaptable, and someone I would confidently recommend for any team looking for a strong contributor and lifelong learner.',
     name: 'Francis Celeste',
     role: 'BS Computer Science, UP Mindanao',
-    relationship: 'UP Mindanao · classmate',
+    relationship: 'Classmate · UP Mindanao',
     sourceDate: 'Jun 2026',
     sourceLabel: 'Recommendation',
     avatarUrl: '/recommendations/francis-celeste-192.jpg',
