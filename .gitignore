@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Editable resume sources stay local; only the PDF is published
+public/*.docx
