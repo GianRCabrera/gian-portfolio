@@ -33,6 +33,7 @@ npm install
 npm run dev       # start the dev server at http://localhost:5173
 npm run build     # production build into dist/
 npm run preview   # serve the production build locally
+npm run check     # pre-deploy check: missing photos, broken links, missing fields, complete build
 ```
 
 ## Project structure
@@ -79,6 +80,8 @@ cwebp -q 76 -resize 640 0 public/Event_1.webp -o public/gallery-thumbs/Event_1.w
 ```
 
 **Add a case study page:** add its content to `caseStudies` in `portfolio.js`, copy `rabdash-dc-mobile/index.html` to a new folder named after the slug (update the title, meta tags, and `data-case-study`), add it to `build.rollupOptions.input` in `vite.config.js`, and set the project's `caseStudyUrl` to `/<slug>/`.
+
+Run `npm run check` after editing content; it names the exact entry if a photo path, date, or link is wrong.
 
 **Add a talk or paper:** add an entry to `research.items`. Set `url` once a paper is published, and remove `status`.
 

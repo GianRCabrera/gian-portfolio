@@ -9,8 +9,8 @@ export default defineConfig({
     rollupOptions: {
       // Case study pages are separate HTML entries next to the main site.
       input: {
-        main: resolve(__dirname, 'index.html'),
-        rabdashDcMobile: resolve(__dirname, 'rabdash-dc-mobile/index.html'),
+        main: resolve(import.meta.dirname, 'index.html'),
+        rabdashDcMobile: resolve(import.meta.dirname, 'rabdash-dc-mobile/index.html'),
       },
     },
   },
