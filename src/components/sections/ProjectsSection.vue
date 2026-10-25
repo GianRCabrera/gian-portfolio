@@ -180,7 +180,7 @@ onUnmounted(() => {
           Selected work.
         </h2>
         <p class="max-w-2xl text-base leading-relaxed text-[var(--ink-soft)]">
-          Real reporting workflows, data-heavy interfaces, and product features that hold up in production.
+          Reporting workflows, data-heavy interfaces, and tools built for public health teams.
         </p>
       </div>
     </div>

@@ -73,7 +73,7 @@ export const projects = [
     contribution: 'Full stack work across mobile UI, auth, and submission flows.',
     impact: 'Faster field submissions and cleaner records.',
     spotlight: {
-      outcome: 'CVO + private vet reporting flow shipped.',
+      outcome: 'CVO and private vet reporting flows built; in active development.',
       role: 'Full stack: UI, auth, and submission workflow.',
       constraints: 'Android-only · requires internet connection.',
     },
@@ -340,15 +340,15 @@ export const contact = {
 export const caseStudies = {
   'rabdash-dc-mobile': {
     title: 'RabDash DC Mobile',
-    kicker: 'Case study · From thesis to production',
+    kicker: 'Case study · Thesis to full-stack app',
     tagline:
       'An Android app that brings rabies vaccination and case reporting for the Davao City Veterinarian’s Office (CVO) and private veterinarians into one place.',
     facts: [
       { label: 'My role', value: 'Full-stack developer, now lead developer' },
-      { label: 'Timeline', value: 'Mar 2023 – present' },
+      { label: 'Timeline', value: 'Mar 2023 – present · in active development' },
       { label: 'Platform', value: 'Android' },
       { label: 'Stack', value: 'React Native · Express.js · Node.js · MySQL' },
-      { label: 'Users', value: 'CVO staff and private veterinarians, Davao City' },
+      { label: 'Built for', value: 'CVO staff and private veterinarians, Davao City' },
       { label: 'Recognition', value: 'Finalist, Best Thesis in Computer Science (Poster)' },
     ],
     sections: [
@@ -385,7 +385,7 @@ export const caseStudies = {
       { src: '/register.webp', caption: 'Sign up', alt: 'Registration screen' },
       { src: '/reset_forgotten_password.webp', caption: 'Reset password', alt: 'Reset forgotten password screen' },
     ],
-    timelineHeading: 'From thesis to production',
+    timelineHeading: 'From thesis to today',
     timeline: [
       { date: 'Mar 2023', text: 'Joined RabDash DC at UP Mindanao as a student researcher and summer intern, and began building the app as my thesis.' },
       { date: '2023 – 2024', text: 'Built and tested the app, and digitized historical vaccination records so they could be migrated into it.' },
