@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="og-title og-desc">
+  <title id="og-title">RabDash DC Mobile case study preview</title>
+  <desc id="og-desc">Case study: RabDash DC Mobile, an Android app for rabies vaccination reporting in Davao City.</desc>
+  <defs>
+    <linearGradient id="bg" x1="180" x2="1020" y1="40" y2="590" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F7F2EA" />
+      <stop offset="1" stop-color="#EEDFCB" />
+    </linearGradient>
+    <radialGradient id="glowA" cx="0" cy="0" r="1" gradientTransform="translate(250 170) rotate(36.13) scale(385 284)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1B6E61" stop-opacity=".22" />
+      <stop offset="1" stop-color="#1B6E61" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="glowB" cx="0" cy="0" r="1" gradientTransform="translate(948 118) rotate(130.179) scale(284 231)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#BA6F4D" stop-opacity=".25" />
+      <stop offset="1" stop-color="#BA6F4D" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#glowA)" />
+  <rect width="1200" height="630" fill="url(#glowB)" />
+  <g opacity=".22">
+    <path d="M0 95H1200" stroke="#163730" />
+    <path d="M0 191H1200" stroke="#163730" />
+    <path d="M0 287H1200" stroke="#163730" />
+    <path d="M0 383H1200" stroke="#163730" />
+    <path d="M0 479H1200" stroke="#163730" />
+    <path d="M0 575H1200" stroke="#163730" />
+    <path d="M95 0V630" stroke="#163730" />
+    <path d="M287 0V630" stroke="#163730" />
+    <path d="M479 0V630" stroke="#163730" />
+    <path d="M671 0V630" stroke="#163730" />
+    <path d="M863 0V630" stroke="#163730" />
+    <path d="M1055 0V630" stroke="#163730" />
+  </g>
+  <rect x="78" y="76" width="1044" height="478" rx="34" fill="#FFF9F1" fill-opacity=".82" stroke="#163730" stroke-opacity=".12" />
+  <circle cx="171" cy="145" r="42" fill="#163730" />
+  <text x="171" y="160" text-anchor="middle" fill="#FFF9F1" font-size="34" font-family="Avenir Next, Segoe UI, sans-serif" font-weight="600">GC</text>
+  <text x="242" y="151" fill="#1B6E61" font-size="22" font-family="Avenir Next, Segoe UI, sans-serif" font-weight="600" letter-spacing="5">CASE STUDY · GIAN CABRERA</text>
+  <text x="112" y="270" fill="#163730" font-size="76" font-family="Iowan Old Style, Georgia, serif" font-weight="600">
+    RabDash DC Mobile
+  </text>
+  <text x="112" y="350" fill="#163730" font-size="76" font-family="Iowan Old Style, Georgia, serif" font-weight="600">
+    From thesis to production
+  </text>
+  <text x="112" y="424" fill="#35544E" font-size="30" font-family="Avenir Next, Segoe UI, sans-serif">
+    An Android app for rabies vaccination reporting
+  </text>
+  <text x="112" y="466" fill="#35544E" font-size="30" font-family="Avenir Next, Segoe UI, sans-serif">
+    for the Davao City Veterinarian’s Office.
+  </text>
+  <rect x="112" y="500" width="380" height="44" rx="22" fill="#163730" />
+  <text x="302" y="529" text-anchor="middle" fill="#FFF9F1" font-size="20" font-family="Avenir Next, Segoe UI, sans-serif" font-weight="600">React Native • Express • MySQL</text>
+  <rect x="912" y="118" width="144" height="144" rx="28" fill="#163730" />
+  <path d="M1006 160c0 20.65-14.79 36-35.1 36-20.88 0-37.5-15.18-37.5-36s16.62-36 37.5-36c10.91 0 20.2 3.48 26.57 10.15l-8.88 9c-4.61-4.71-10.46-7.11-17.69-7.11-13.16 0-23.26 9.96-23.26 24.03 0 14.04 10.1 24.04 23.26 24.04 12.03 0 20.42-7.42 22.09-18.6h-18.62v-12.18H1006V160Z" fill="#FFF9F1" />
+  <path d="M1059 100c-15.02 0-27.25 11.81-27.25 27.11s12.23 27.1 27.25 27.1h17.26v20.37H1059c-26.23 0-47.44-21.08-47.44-47.47 0-26.39 21.21-47.47 47.44-47.47h17.26V100H1059Z" fill="#BA6F4D" />
+</svg>

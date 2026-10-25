@@ -91,9 +91,12 @@ for (const { href, where } of hashLinks) {
 
 // 5. Page metadata
 const indexHtml = readFileSync(join(root, 'index.html'), 'utf8')
-const ogImage = indexHtml.match(/property="og:image" content="([^"]+)"/)?.[1] || ''
-ok(/^https:\/\//.test(ogImage), 'index.html: og:image must be a full https:// URL')
-ok(existsSync(join(root, 'public', new URL(ogImage || 'https://x/none').pathname)), `index.html: og:image file is missing in public/`)
+for (const page of ['index.html', ...Object.keys(caseStudies).map((slug) => `${slug}/index.html`)]) {
+  if (!existsSync(join(root, page))) continue
+  const ogImage = readFileSync(join(root, page), 'utf8').match(/property="og:image" content="([^"]+)"/)?.[1] || ''
+  ok(/^https:\/\//.test(ogImage), `${page}: og:image must be a full https:// URL`)
+  ok(existsSync(join(root, 'public', new URL(ogImage || 'https://x/none').pathname)), `${page}: og:image file is missing in public/`)
+}
 const jsonLd = indexHtml.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1]
 try {
   ok(JSON.parse(jsonLd || 'null')?.['@type'] === 'Person', 'index.html: structured data should describe a Person')

@@ -274,7 +274,7 @@ export const skills = [
   },
   {
     title: 'Backend and data',
-    items: ['Node.js', 'Express', 'REST APIs', 'JWT auth', 'PHP / Laravel', 'MySQL', 'MongoDB', 'Power BI', 'Excel / CSV processing'],
+    items: ['Node.js', 'Express', 'REST APIs', 'JWT auth', 'PHP / Laravel', 'Python', 'MySQL', 'MongoDB', 'Power BI', 'Excel / CSV processing'],
   },
   {
     title: 'Tools',
